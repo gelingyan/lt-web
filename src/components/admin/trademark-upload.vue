@@ -114,7 +114,7 @@
           this.$refs[form].validate((valid) => {
             this.form.files = files
             const params = this.form
-            api.upload(params).then((response) => {
+            api.addMark(params).then((response) => {
               if (response.data.messageType === 1) {
                 this.$message({
                   type: 'success',

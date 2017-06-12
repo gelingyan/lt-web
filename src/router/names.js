@@ -5,6 +5,7 @@ export const ADMIN__LOGIN = 'ADMIN__LOGIN'
 export const ADMIN_USER__LIST = 'ADMIN_USER__LIST' // 用户列表
 export const ADMIN_TRADEMARK__LIST = 'ADMIN_TRADEMARK__LIST' // 商标列表
 export const ADMIN_TRADEMARK__UPLOAD = 'ADMIN_TRADEMARK__UPLOAD' // 商标上传
+export const ADMIN_ARTICLE__LIST = 'ADMIN_ARTICLE__LIST' // 文章编辑
 
 // 移动端
 export const MOBILE__INDEX = 'MOBILE__INDEX'

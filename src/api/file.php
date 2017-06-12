@@ -2,9 +2,9 @@
 	require 'config.php';
 
 	$params = file_get_contents('php://input');
-    $params = json_decode($params, TRUE);
+  $params = json_decode($params, TRUE);
 
-    $results = array();
+  $results = array();
 
 	$query = "INSERT INTO file(name,data,type,size) VALUES ('{$params['name']}', '{$params['data']}', '{$params['type']}', '{$params['size']}')";
 

@@ -49,6 +49,13 @@ const router = new Router({
           component (resolve) {
             require(['../components/admin/trademark-upload.vue'], resolve)
           }
+        },
+        { // 文章上传
+          name: names.ADMIN_ARTICLE__LIST,
+          path: '/admin/article/upload',
+          component (resolve) {
+            require(['../components/admin/article-edit.vue'], resolve)
+          }
         }
       ]
     },
