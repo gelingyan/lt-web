@@ -36,12 +36,7 @@
     },
     methods: {
       del (item) {
-        let files = this.files
-        for (let i in files) {
-          if (item === files[i]) {
-            this.files.splice(i, 1)
-          }
-        }
+        this.files.splice(this.files.indexOf(item), 1)
       },
       picturePreview (item) {
         this.picturePreviewSrc = item.data

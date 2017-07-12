@@ -6,25 +6,26 @@ import storage from '../module/storage'
 Vue.use(Router)
 
 const router = new Router({
+//  mode: 'history',
   routes: [
     {
       name: names.ADMIN__LOGIN,
-      path: '/admin/login',
+      path: '/adm/login',
       component (resolve) {
         require(['../components/admin/admin-login.vue'], resolve)
       }
     },
-    {// 后台管理主页
-      name: names.ADMIN__ADMIN,
-      path: '/admin',
-      component (resolve) {
-        require(['../components/admin/index.vue'], resolve)
-      }
-    },
+    // {// 后台管理主页
+    //   name: names.ADMIN__ADMIN,
+    //   path: '/admin',
+    //   component (resolve) {
+    //     require(['../components/admin/index.vue'], resolve)
+    //   }
+    // },
     /* 帐号管理 */
     {
       name: names.ADMIN__INDEX,
-      path: '/admin/admin',
+      path: '/admin',
       component (resolve) {
         require(['../components/admin/admin.vue'], resolve)
       },
@@ -150,13 +151,13 @@ router.beforeEach((to, from, next) => {
     storage.setMenu({to: to.name})
   }
 
-  if (to.path === '/admin/login') {
+  if (to.path === '/adm/login') {
     storage.delAdmin()
   }
 
   let admin = storage.getAdmin()
-  if (to.path === '/admin' && !admin) {
-    next({ path: '/admin/login' })
+  if (/admin/.test(to.path) && !admin) {
+    next({ path: '/adm/login' })
   } else {
     next()
   }

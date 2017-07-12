@@ -32,11 +32,11 @@ const menu = [
   {
     id: '3',
     icon: 'el-icon-document',
-    title: '文档管理',
+    title: '文章管理',
     children: [
       {
         index: names.ADMIN_ARTICLE__LIST,
-        text: '文档上传'
+        text: '文章列表'
       }
       ]
   },

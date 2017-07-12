@@ -27,6 +27,10 @@ export const delUser = params => { return instance.post('delUser.php', params) }
 export const addMark = params => { return instance.post('add_mark.php', params) }
 // 商标列表
 export const getMarks = params => { return instance.post('marks.php', params) }
+// 删除商标
+export const delMark = params => { return instance.post('delMark.php', params) }
+// 商标分类
+export const getAllMarkClass = params => { return instance.post('mark_class.php', params) }
 
 // =================================   mobile   ===============================
 // 登录

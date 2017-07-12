@@ -17,7 +17,9 @@
       <el-col :span="4">
         <el-button
           type="danger"
-          icon="delete">批量删除
+          icon="delete"
+          :disabled="multipleSelection.length>0?false:true"
+          @click="dellAll">批量删除
         </el-button>
       </el-col>
     </el-row>
@@ -25,7 +27,12 @@
     <el-row>
       <el-table
         :data="tableData"
-        style="width: 100%">
+        style="width: 100%"
+        @selection-change="handleSelectionChange">
+        <el-table-column
+          type="selection"
+          width="55">
+        </el-table-column>
         <el-table-column type="expand">
           <template scope="props">
             <el-form label-position="left" inline class="demo-table-expand">
@@ -44,24 +51,29 @@
               <el-form-item label="人气指数:">
                 <span>{{ props.row.hot }}次</span>
               </el-form-item>
+              <el-form-item label="商标:">
+                <span v-for="item in props.row.imgs" class="img-wrapper">
+                  <img :src="item.data">
+                </span>
+              </el-form-item>
             </el-form>
           </template>
         </el-table-column>
         <el-table-column
           label="商标">
           <template scope="scope">
-            <span v-for="item in scope.row.imgs" class="img-wrapper">
-              <img :src="item.data">
+            <span class="img-wrapper">
+              <img :src="scope.row.imgs[0].data">
             </span>
           </template>
         </el-table-column>
         <el-table-column
-          label="申请/注册号"
-          prop="apply">
-        </el-table-column>
-        <el-table-column
           label="商标名称"
           prop="title">
+        </el-table-column>
+        <el-table-column
+          label="申请/注册号"
+          prop="apply">
         </el-table-column>
         <el-table-column
           label="国际分类"
@@ -71,8 +83,14 @@
           label="价格"
           prop="price">
         </el-table-column>
+        <el-table-column
+          label="操作" width="180">
+          <template scope="scope">
+            <el-button size="small" type="primary" icon="edit">修改</el-button>
+            <el-button size="small" type="danger" icon="delete" @click="del(scope, tableData)">删除</el-button>
+          </template>
+        </el-table-column>
       </el-table>
-
     </el-row>
 
     <div class="page-wrapper fr">
@@ -95,6 +113,7 @@
     data () {
       return {
         tableData: [],
+        multipleSelection: [],
         currentPage: 1,
         pageSizes: [20, 30, 40, 50],
         pageSize: 20,
@@ -105,6 +124,43 @@
       this.getDate()
     },
     methods: {
+      handleSelectionChange (val) {
+        this.multipleSelection = val
+      },
+      del (index, rows) {
+        const params = [
+          index.row
+        ]
+        this.delFun(params)
+      },
+      dellAll () {
+        this.delFun(this.multipleSelection)
+      },
+      delFun (params) {
+        this.$confirm('是否删除商标？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          showCancelButton: false,
+          type: 'warning'
+        }).then(() => {
+          api.delMark(params).then((response) => {
+            if (response.data.messageType === 1) {
+              this.$message({
+                type: 'success',
+                message: response.data.message
+              })
+              this.getDate()
+            } else if (response.data.messageType === 2) {
+              this.$message.error(response.data.message)
+            }
+          }).catch(error => {
+            console.log(error)
+          }).finally(() => {
+          })
+        }).catch(error => {
+          console.log(error)
+        })
+      },
       getDate () {
         this.tableData = []
         const params = {
@@ -146,6 +202,8 @@
   .img-wrapper{
     width: 100px;
     display: inline-block;
+    margin: 10px;
+    box-shadow: 0px 0px 2px #dfdfdf;
     img{width: 100%}
   }
   demo-table-expand {

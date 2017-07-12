@@ -11,8 +11,7 @@
     $results["meta"]["message"] = "申请/注册号已存在";
   } else {
     $_markID = time();
-
-    for ($x=0; $x<=$params['files'].length; $x++) {
+    for ($x=0; $x<sizeof($params['files']); $x++) {
        $file = "INSERT INTO lt_file(data,size,name,type,mark_id)
               VALUES ('{$params['files'][$x]['data']}','{$params['files'][$x]['size']}','{$params['files'][$x]['name']}','{$params['files'][$x]['type']}','{$_markID}')";
        mysql_query($file) or die('新增失败！'.mysql_error());

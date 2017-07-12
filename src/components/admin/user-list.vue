@@ -24,7 +24,7 @@
           type="danger"
           icon="delete"
           :disabled="multipleSelection.length>0?false:true"
-          @click="dellAll(tableData)">批量删除
+          @click="dellAll()">批量删除
         </el-button>
       </el-col>
     </el-row>
@@ -43,7 +43,7 @@
       </el-table-column>
       <el-table-column
         type="index"
-        width="50">
+        width="70">
       </el-table-column>
       <el-table-column
         prop="date"
