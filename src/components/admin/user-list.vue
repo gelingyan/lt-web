@@ -103,11 +103,9 @@
 <script>
   import api from '../../api'
   import {mergeCol} from '../../module/mergeCol'
-  import draggable from 'vuedraggable'
   export default {
     components: {
-      'dlg-user-list': require('./dlg-user-list.vue'),
-      draggable
+      'dlg-user-list': require('./dlg-user-list.vue')
     },
     data () {
       return {

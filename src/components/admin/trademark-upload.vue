@@ -19,14 +19,17 @@
       </el-form-item>
 
       <el-form-item label="	国际分类" prop="classify">
-        <el-select v-model="form.classify" placeholder="请选择国际分类">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
+        <el-row>
+          <el-col :span="16"><el-input v-model="form.classify" placeholder="请输入：1-45之间的阿拉伯数字，例如第9类输入：9"></el-input></el-col>
+          <el-col :span="4" :offset="1"><el-button  icon="search" type="primary" @click="btnClassify">查询</el-button></el-col>
+        </el-row>
+      </el-form-item>
+
+      <el-form-item label="类似群" prop="group">
+        <el-row>
+          <el-col :span="16"><el-input v-model="form.group" :disabled="!form.classify" placeholder="请先输入国际分类号，然后选择类似群号，最多不超过5项"></el-input></el-col>
+          <el-col :span="4" :offset="1"><el-button icon="search" type="primary" @click="btnGroup" :disabled="!form.classify">查询</el-button></el-col>
+        </el-row>
       </el-form-item>
 
       <el-form-item label="商标类型">
@@ -42,15 +45,6 @@
           type="daterange"
           placeholder="选择日期范围">
         </el-date-picker>
-      </el-form-item>
-
-      <el-form-item label="类似群">
-        <el-checkbox-group v-model="form.group">
-          <el-checkbox label="美食/餐厅线上活动" name="group"></el-checkbox>
-          <el-checkbox label="地推活动" name="group"></el-checkbox>
-          <el-checkbox label="线下主题活动" name="group"></el-checkbox>
-          <el-checkbox label="单纯品牌曝光" name="group"></el-checkbox>
-        </el-checkbox-group>
       </el-form-item>
 
       <el-form-item label="商品/服务">
@@ -70,6 +64,8 @@
         <el-button @click="resetForm">重置</el-button>
       </el-form-item>
     </el-form>
+
+    <dlg-classify-list ref="refDlg" @callback="callback"></dlg-classify-list>
   </div>
 </template>
 <script>
@@ -78,29 +74,12 @@
   export default {
     components: {
       'upload': require('./common/upload.vue'),
-      'v-editor': require('./common/Editor')
+      'dlg-classify-list': require('./dlg-classify-list.vue')
     },
     data () {
       return {
         inputContent: 'base on wangeditor',
         outputContent: '',
-        uploadUrl: '/api/v1/help/upload/wangEditorH5File',
-        options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }],
         form: {
           files: [],
           title: '', // 商标名称 1
@@ -108,7 +87,7 @@
           classify: '', // 国际分类 1
           type: '', // 商标类型 0
           term: '', // 专用权期限 0
-          group: [], // 类似群 0
+          group: '', // 类似群 0
           desc: '', // 商品/服务 0
           price: '', // 商标价格 1
           hot: '' // 人气指数 0
@@ -121,7 +100,10 @@
             { required: true, message: '请输入申请/注册号', trigger: 'blur change' }
           ],
           classify: [
-            { required: true, message: '请选择国际分类', trigger: 'change' }
+            { required: true, message: '请输入国际分类', trigger: 'change' }
+          ],
+          group: [
+            { required: true, message: '请选择类似群号', trigger: 'change' }
           ],
           price: [
             { required: true, message: '请输入商标价格', trigger: 'blur change' }
@@ -132,21 +114,22 @@
         imageUrl: ''
       }
     },
-    mounted () {
-      this.getAllMarkClass()
-    },
     methods: {
-      getAllMarkClass () {
-        api.getAllMarkClass({}).then((response) => {
-          if (response.data.messageType === 1) {
-            console.log(response)
-          } else if (response.data.messageType === 2) {
-            this.$message.error(response.data.message)
-          }
-        }).catch(error => {
-          console.log(error)
-        }).finally(() => {
+      btnClassify () {
+        this.$refs.refDlg.toggle({
+          type: 'class',
+          dialogFormVisible: true
         })
+      },
+      btnGroup () {
+        this.$refs.refDlg.toggle({
+          type: 'group',
+          dialogFormVisible: true,
+          code: this.form.classify
+        })
+      },
+      callback (id) {
+        this.form.classify = id
       },
       submitForm (form) {
         console.log(this.outputContent)
