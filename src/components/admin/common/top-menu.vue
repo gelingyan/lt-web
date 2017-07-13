@@ -1,6 +1,6 @@
 <template>
   <el-row class="top-menu-wrapper">
-    <el-col :span="12" class="logo-wrapper tl"><img src="../../../assets/img/logo.png" alt="" height="40"></el-col>
+    <el-col :span="12" class="logo-wrapper tl">龙腾商标转让</el-col>
     <el-col :span="12" class="user-wrapper tr">
       <span class="name">{{user.name}} / </span>
       <el-button type="text" class="logout" @click="logout">退出登录</el-button></el-col>
@@ -41,6 +41,9 @@
     height: 60px;
     line-height: 60px;
     .logo-wrapper{
+      font-size: 22px;
+      color: #fff;
+      letter-spacing: 2px;
       img{
         width:106px;
         display: inline-block;

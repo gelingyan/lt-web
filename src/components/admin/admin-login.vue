@@ -68,14 +68,13 @@
               userType: '01'
             }
             api.adminLogin(params).then((response) => {
-              console.log(response.data)
               if (response.data.messageType === 1) {
                 this.$message({
                   type: 'success',
                   message: response.data.message
                 })
                 storage.setAdmin(response.data.data)
-                this.$router.replace({name: names.ADMIN__ADMIN})
+                this.$router.replace({name: names.ADMIN_USER__LIST})
               } else if (response.data.messageType === 2) {
                 this.$message.error(response.data.message)
                 this.$refs[formName].resetFields()

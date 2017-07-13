@@ -42,14 +42,10 @@ const menu = [
   },
   {
     id: '4',
-    icon: 'el-icon-document',
+    icon: 'el-icon-share',
     title: '移动端',
-    children: [
-      {
-        index: names.MOBILE__HOME,
-        text: '主页'
-      }
-      ]
+    index: names.MOBILE__HOME,
+    children: []
   }
 ]
 export default menu

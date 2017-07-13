@@ -20,9 +20,10 @@
 
       <el-form-item label="	国际分类" prop="classify">
         <el-row>
-          <el-col :span="16"><el-input v-model="form.classify" placeholder="请输入：1-45之间的阿拉伯数字，例如第9类输入：9"></el-input></el-col>
+          <el-col :span="16"><el-input-number :min="1" :max="45" v-model="form.classify"></el-input-number></el-col>
           <el-col :span="4" :offset="1"><el-button  icon="search" type="primary" @click="btnClassify">查询</el-button></el-col>
         </el-row>
+        <span class="tag">（请输入：1-45之间的阿拉伯数字，例如第9类输入：9）</span>
       </el-form-item>
 
       <el-form-item label="类似群" prop="group">
@@ -31,12 +32,8 @@
           <el-col :span="4" :offset="1"><el-button icon="search" type="primary" @click="btnGroup" :disabled="!form.classify">查询</el-button></el-col>
         </el-row>
       </el-form-item>
-
-      <el-form-item label="商标类型">
-        <el-radio-group v-model="form.type">
-          <el-radio label="一般"></el-radio>
-          <el-radio label="线下场地免费"></el-radio>
-        </el-radio-group>
+      <el-form-item label="商品/服务" prop="desc">
+        <el-input type="textarea" v-model="form.desc"></el-input>
       </el-form-item>
 
       <el-form-item label="专用权期限">
@@ -45,10 +42,6 @@
           type="daterange"
           placeholder="选择日期范围">
         </el-date-picker>
-      </el-form-item>
-
-      <el-form-item label="商品/服务">
-        <el-input type="textarea" v-model="form.desc"></el-input>
       </el-form-item>
 
       <el-form-item label="商标价格" prop="price">
@@ -61,11 +54,11 @@
 
       <el-form-item>
         <el-button type="primary" @click="submitForm('form')">立即上传</el-button>
-        <el-button @click="resetForm">重置</el-button>
+        <el-button @click="resetForm('form')">重置</el-button>
       </el-form-item>
     </el-form>
 
-    <dlg-classify-list ref="refDlg" @callback="callback"></dlg-classify-list>
+    <dlg-trademark-attribute ref="refDlg" @callbackClass="callbackClass" @callbackGroup="callbackGroup"></dlg-trademark-attribute>
   </div>
 </template>
 <script>
@@ -74,12 +67,10 @@
   export default {
     components: {
       'upload': require('./common/upload.vue'),
-      'dlg-classify-list': require('./dlg-classify-list.vue')
+      'dlg-trademark-attribute': require('./dlg-trademark-upload-list.vue')
     },
     data () {
       return {
-        inputContent: 'base on wangeditor',
-        outputContent: '',
         form: {
           files: [],
           title: '', // 商标名称 1
@@ -100,7 +91,21 @@
             { required: true, message: '请输入申请/注册号', trigger: 'blur change' }
           ],
           classify: [
-            { required: true, message: '请输入国际分类', trigger: 'change' }
+            {
+              required: true,
+              trigger: 'blur change',
+              validator: (rule, value, callback) => {
+                if (value) {
+                  if (value.toString().indexOf('.') === -1) {
+                    callback()
+                  } else {
+                    callback(new Error('请输入正整数'))
+                  }
+                } else {
+                  callback(new Error('请输入国际分类'))
+                }
+              }
+            }
           ],
           group: [
             { required: true, message: '请选择类似群号', trigger: 'change' }
@@ -128,11 +133,16 @@
           code: this.form.classify
         })
       },
-      callback (id) {
-        this.form.classify = id
+      callbackClass (id) {
+        this.form.classify = parseInt(id)
+        this.form.group = ''
+        this.form.desc = ''
+      },
+      callbackGroup (data) {
+        this.form.group = data.codes
+        this.form.desc = data.desc
       },
       submitForm (form) {
-        console.log(this.outputContent)
         this.$refs[form].validate((valid) => {
           if (valid) {
             let files = this.$refs.refUpload.files
@@ -144,7 +154,7 @@
                   type: 'success',
                   message: response.data.message
                 })
-                this.$router.push({name: names.ADMIN_TRADEMARK__LIST})
+                this.$router.push({name: names.ADMIN_TRADEMARK__UPLOAD})
               } else if (response.data.messageType === 2) {
                 this.$message.error(response.data.message)
               }
@@ -157,14 +167,19 @@
           }
         })
       },
-      resetForm () {
+      resetForm (form) {
+        this.$refs[form].resetFields()
       }
     }
   }
 </script>
 <style scoped lang="scss" rel="stylesheet/scss">
   .upload-wrapper{
-    .el-form{padding-top: 20px}
+    .el-form{
+      padding-top: 20px;
+      .tag{font-size: 12px;color: #999;}
+      .el-input-number{width: 100%}
+    }
   }
 </style>
 

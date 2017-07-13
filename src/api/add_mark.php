@@ -18,7 +18,7 @@
     }
 
      $query = "INSERT INTO lt_mark(date,files,title,apply,classify,price)
-              VALUES (now(),'{$_markID}','{$params['title']}','{$params['apply']}', '{$params['class']}', '{$params['price']}')";
+              VALUES (now(),'{$_markID}','{$params['title']}','{$params['apply']}','{$params['classify']}','{$params['price']}')";
 
      mysql_query($query) or die('新增失败！'.mysql_error());
 
