@@ -36,17 +36,17 @@
         <el-table-column type="expand">
           <template scope="props">
             <el-form label-position="left" inline class="demo-table-expand">
-              <el-form-item label="商标类型:">
-                <span>{{ props.row.type }}</span>
-              </el-form-item>
+              <!--<el-form-item label="商标类型:">-->
+                <!--<span>{{ props.row.type }}</span>-->
+              <!--</el-form-item>-->
               <el-form-item label="专用期限:">
-                <span>{{ props.row.term }}</span>
+                <span>{{ props.row.timeLimit }}</span>
               </el-form-item>
               <el-form-item label="类似群:">
-                <span>{{ props.row.group }}</span>
+                <span>{{ props.row.similarGroup }}</span>
               </el-form-item>
               <el-form-item label="核定范围:">
-                <span>{{ props.row.desc }}</span>
+                <span>{{ props.row.explicate }}</span>
               </el-form-item>
               <el-form-item label="人气指数:">
                 <span>{{ props.row.hot }}次</span>

@@ -17,8 +17,8 @@
        mysql_query($file) or die('新增失败！'.mysql_error());
     }
 
-     $query = "INSERT INTO lt_mark(date,files,title,apply,classify,price)
-              VALUES (now(),'{$_markID}','{$params['title']}','{$params['apply']}','{$params['classify']}','{$params['price']}')";
+     $query = "INSERT INTO lt_mark(date,files,title,apply,classify,price,similarGroup,explicate,timeLimit,hot)
+              VALUES (now(),'{$_markID}','{$params['title']}','{$params['apply']}','{$params['classify']}','{$params['price']}','{$params['similarGroup']}','{$params['explicate']}','{$params['timeLimit']}','{$params['hot']}')";
 
      mysql_query($query) or die('新增失败！'.mysql_error());
 

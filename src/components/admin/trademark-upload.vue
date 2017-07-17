@@ -26,21 +26,22 @@
         <span class="tag">（请输入：1-45之间的阿拉伯数字，例如第9类输入：9）</span>
       </el-form-item>
 
-      <el-form-item label="类似群" prop="group">
+      <el-form-item label="类似群" prop="similarGroup">
         <el-row>
-          <el-col :span="16"><el-input v-model="form.group" :disabled="!form.classify" placeholder="请先输入国际分类号，然后选择类似群号，最多不超过5项"></el-input></el-col>
+          <el-col :span="16"><el-input v-model="form.similarGroup" :disabled="!form.classify" placeholder="请先输入国际分类号，然后选择类似群号，最多不超过5项"></el-input></el-col>
           <el-col :span="4" :offset="1"><el-button icon="search" type="primary" @click="btnGroup" :disabled="!form.classify">查询</el-button></el-col>
         </el-row>
       </el-form-item>
-      <el-form-item label="商品/服务" prop="desc">
-        <el-input type="textarea" v-model="form.desc"></el-input>
+      <el-form-item label="商品/服务" prop="explicate">
+        <el-input type="textarea" v-model="form.explicate"></el-input>
       </el-form-item>
 
       <el-form-item label="专用权期限">
         <el-date-picker
           v-model="form.term"
           type="daterange"
-          placeholder="选择日期范围">
+          range-separator=" ~ "
+          placeholder="选择日期范围" @change="btnDate">
         </el-date-picker>
       </el-form-item>
 
@@ -63,7 +64,6 @@
 </template>
 <script>
   import api from '../../api'
-  import * as names from '../../router/names'
   export default {
     components: {
       'upload': require('./common/upload.vue'),
@@ -78,8 +78,9 @@
           classify: '', // 国际分类 1
           type: '', // 商标类型 0
           term: '', // 专用权期限 0
-          group: '', // 类似群 0
-          desc: '', // 商品/服务 0
+          timeLimit: '', // 专用权期限 0
+          similarGroup: '', // 类似群 0
+          explicate: '', // 商品/服务 0
           price: '', // 商标价格 1
           hot: '' // 人气指数 0
         },
@@ -107,7 +108,7 @@
               }
             }
           ],
-          group: [
+          similarGroup: [
             { required: true, message: '请选择类似群号', trigger: 'change' }
           ],
           price: [
@@ -135,12 +136,15 @@
       },
       callbackClass (id) {
         this.form.classify = parseInt(id)
-        this.form.group = ''
-        this.form.desc = ''
+        this.form.similarGroup = ''
+        this.form.explicate = ''
       },
       callbackGroup (data) {
-        this.form.group = data.codes
-        this.form.desc = data.desc
+        this.form.similarGroup = data.codes
+        this.form.explicate = data.desc
+      },
+      btnDate (val) {
+        this.form.timeLimit = val
       },
       submitForm (form) {
         this.$refs[form].validate((valid) => {
@@ -154,7 +158,7 @@
                   type: 'success',
                   message: response.data.message
                 })
-                this.$router.push({name: names.ADMIN_TRADEMARK__UPLOAD})
+                window.location.reload()
               } else if (response.data.messageType === 2) {
                 this.$message.error(response.data.message)
               }
