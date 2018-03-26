@@ -117,7 +117,7 @@
         })
       },
       login () {
-        this.$router.push({name: names.MOBILE__LOGIN})
+        this.$router.push({name: names.login.name})
       },
       register () {
         let validate = this.user.onValidate() && this.password.onValidate() && this.password2.onValidate() && this.code.onValidate()
@@ -141,7 +141,7 @@
                 message: response.data.message
               })
               storage.setUser(response.data.data)
-              this.$router.replace({name: names.MOBILE__HOME})
+              this.$router.replace({name: names.home.name})
             } else if (response.data.messageType === 2) {
               Toast(response.data.message)
             }

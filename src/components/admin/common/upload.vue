@@ -1,7 +1,7 @@
 <template>
   <div class='upload-container'>
     <ul class='files-container'>
-      <li v-for="item in files">
+      <li v-for="(item, index) in files" :key="index">
         <img :src="item.data">
         <label>
           <i class="el-icon-check"></i>

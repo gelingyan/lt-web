@@ -19,10 +19,10 @@
   export default {
     methods: {
       login () {
-        this.$router.push({name: names.MOBILE__LOGIN})
+        this.$router.push({name: names.login.name})
       },
       register () {
-        this.$router.push({name: names.MOBILE__REGISTER})
+        this.$router.push({name: names.register.name})
       },
       share () {}
     }

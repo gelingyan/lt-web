@@ -15,7 +15,7 @@
                        @bottom-status-change="handleBottomChange"
                        ref="loadmore">
             <ul class="margin-b">
-              <li v-for="(user,index) in userList">
+              <li v-for="(user,index) in userList" :key="index">
                 <mt-cell :title="index +' '+ user.name" />
               </li>
             </ul>
@@ -28,7 +28,7 @@
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
           <template v-for="n in 6">
-            <mt-cell :title="'content ' + n" />
+            <mt-cell :title="'content ' + n" :key="n"/>
           </template>
         </mt-tab-container-item>
       </mt-tab-container>

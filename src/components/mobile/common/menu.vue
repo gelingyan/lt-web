@@ -1,6 +1,6 @@
 <template>
   <div class="menu cf">
-    <div class="icon-wrapper" v-for="item in items" @click.stop="menuClick(item)">
+    <div class="icon-wrapper" v-for="(item, index) in items" :key="index" @click.stop="menuClick(item)">
       <i class="tc iconfont" :class="item.icon">{{item.title}}</i>
     </div>
   </div>
@@ -13,14 +13,14 @@
     data () {
       return {
         items: [
-          {id: 1, title: '商标超市', icon: 'icon-shangdian1', name: names.GOODS__GOODS, keyword: 'all'},
-          {id: 2, title: '原创商标', icon: 'icon-chuangyisheji', name: names.GOODS__GOODS, keyword: 'own'},
-          {id: 3, title: '商标注册', icon: 'icon-shangbiaozhuce', name: names.MOBILE__ARTICLE, keyword: 'registration'},
-          {id: 4, title: '专利申请', icon: 'icon-shenqing1', name: names.MOBILE__ARTICLE, keyword: 'application'},
-          {id: 5, title: '商标分类', icon: 'icon-fenlei3', name: names.MOBILE__CLASS, navBottomflag: true},
-          {id: 6, title: '商标查询', icon: 'icon-chaxun', name: names.GOODS__GOODS, keyword: 'search'},
-          {id: 7, title: '转让流程', icon: 'icon-shangbiaozhuanrang', name: names.MOBILE__ARTICLE, keyword: 'transfer'},
-          {id: 8, title: '公司简介', icon: 'icon-gongsi', name: names.MOBILE__ARTICLE, keyword: 'company'}
+          {id: 1, title: '商标超市', icon: 'icon-shangdian1', name: names.goodsClass.name, keyword: 'all'},
+          {id: 2, title: '原创商标', icon: 'icon-chuangyisheji', name: names.goodsClass.name, keyword: 'own'},
+          {id: 3, title: '商标注册', icon: 'icon-shangbiaozhuce', name: names.document.name, keyword: 'registration'},
+          {id: 4, title: '专利申请', icon: 'icon-shenqing1', name: names.document.name, keyword: 'application'},
+          {id: 5, title: '商标分类', icon: 'icon-fenlei3', name: names.classily.name, navBottomflag: true},
+          {id: 6, title: '商标查询', icon: 'icon-chaxun', name: names.goodsClass.name, keyword: 'search'},
+          {id: 7, title: '转让流程', icon: 'icon-shangbiaozhuanrang', name: names.document.name, keyword: 'transfer'},
+          {id: 8, title: '公司简介', icon: 'icon-gongsi', name: names.document.name, keyword: 'company'}
         ]
       }
     },

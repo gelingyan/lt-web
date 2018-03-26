@@ -5,7 +5,8 @@
 
   foreach($params as $ids){
     $_id = (int)$ids['id'];
-    $exec="delete from lt_user where id=$_id";
+    // $exec="delete from lt_user where id=$_id";
+    $exec="UPDATE lt_user SET isDelete=0 WHERE id = $_id";
     $result=mysql_query($exec);
     if((mysql_affected_rows()==0) or (mysql_affected_rows==-1)){
       $results["meta"]["code"] = 100032;

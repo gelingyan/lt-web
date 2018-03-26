@@ -1,6 +1,7 @@
 <template>
   <div>
     <p class="tc title">&nbsp;&nbsp;显示高级选项&nbsp;&nbsp;</p>
+    <jk-search v-if="search"></jk-search>
 
     <mt-navbar v-model="selected" class="goods-tab">
       <mt-tab-item id="1">新品</mt-tab-item>
@@ -18,10 +19,12 @@
 <script>
     export default {
       components: {
-        'jk-market': require('../common/market.vue')
+        'jk-market': require('../common/market.vue'),
+        'jk-search': require('./search.vue')
       },
       data () {
         return {
+          search: false,
           selected: '1',
           products: [
             {id: 1, title: '抱抱乖1', keyword: 25, label: '第25类', price: 510, img: 'static/img/bg.jpg', hot: ''},

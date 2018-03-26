@@ -13,8 +13,8 @@
     $results["meta"]["code"] = 100090;
     $results["meta"]["message"] = "用户已存在";
   } else {
-    $query = "INSERT INTO lt_user(date,user,phone,pass,userID,userType,email,note)
-                 VALUES (now(),'{$params['user']}','{$params['phone']}', sha1('{$params['password']}'), '{$_userID}', '{$_userType}', '{$params['email']}', '{$params['note']}')";
+    $query = "INSERT INTO lt_user(date,user,phone,pass,userID,userType,email,note,isDelete)
+                 VALUES (now(),'{$params['user']}','{$params['phone']}', sha1('{$params['password']}'), '{$_userID}', '{$_userType}', '{$params['email']}', '{$params['note']}', 1)";
 
     mysql_query($query) or die('新增失败！'.mysql_error());
 

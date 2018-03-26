@@ -4,8 +4,6 @@
     <mt-picker v-show="false" :slots="slots" @change="onValuesChange" ref="picker"></mt-picker>
     </mt-radio>
     <p>价格</p>
-
-
     <p>类型</p>
     <p>注册年限</p>
     <p>快速筛选</p>

@@ -6,10 +6,10 @@
   $pageSize = $params['pageSize'];
   $start = ($currentPage - 1)*$pageSize;
 
-  $sql=mysql_query("select count(*) from lt_mark");
+  $sql=mysql_query("select count(*) from lt_mark WHERE isDelete=1");
   $total = mysql_fetch_row($sql);
 
-	$query = mysql_query("SELECT * FROM lt_mark order by date DESC limit $start, $pageSize") or die('SQL错误！');
+	$query = mysql_query("SELECT * FROM lt_mark WHERE isDelete=1 order by date DESC limit $start, $pageSize") or die('SQL错误！');
 
   $results = array();
   while($row = mysql_fetch_assoc($query)){
@@ -18,6 +18,7 @@
     while($files = mysql_fetch_assoc($sql)){
        $row['imgs'][] = $files;
     }
+    if(is_null($row['imgs'])) $row['imgs'] = array(); // 搜索结果为空，则定义为数组
     $results["data"]["list"][] = $row;
   }
   if ($results["data"]) { //商标列表
@@ -29,6 +30,10 @@
   } else {
     $results["meta"]["code"] = 100030;
     $results["meta"]["message"] = "暂无数据";
+    $results["data"]["list"] = array(); 
+    $results["data"]["currentPage"] = 0;
+    $results["data"]["pageSize"] = 0;
+    $results["data"]["total"] = 0;
   }
 
   // 将数组转成json格式

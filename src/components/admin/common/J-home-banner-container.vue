@@ -13,7 +13,7 @@
           </el-col>
           <el-col :span="12">
             <div class="banner-row">
-              <div class="right-image" v-for="img in item.imgList"><img :src="img.src"></div>
+              <div class="right-image" v-for="(img, index) in item.imgList" :key="index"><img :src="img.src"></div>
             </div>
           </el-col>
         </el-row>

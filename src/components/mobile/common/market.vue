@@ -1,6 +1,6 @@
 <template>
   <ul class="mc cf" id="container">
-    <li v-for="item in products">
+    <li v-for="(item, index) in products" :key="index">
       <div class="img-wrapper" @click="imgClick(item)"><img v-lazy.container="item.img" /></div>
       <p class="title">{{item.title}}</p>
       <p class="cf price-wrapper">
@@ -67,11 +67,11 @@
 
                  //   this.$store.commit('user', response.data.data)
                   //  storage.setUser()titleString
-                    this.$router.replace({name: names.MOBILE__HOME})
+                    this.$router.replace({name: names.home.name})
                   } else if (response.data.messageType === 2) {
                       if (response.data.message === '用户已存在') {
                           storage.setPhone(params.user)
-                          this.$router.push({name: names.MOBILE__LOGIN, params: {user: params.user}})
+                          this.$router.push({name: names.login.name, params: {user: params.user}})
                       } else {
                         Toast(response.data.message)
                       }
@@ -93,7 +93,7 @@
         this.priceFlag = true
       },
       imgClick (item) {
-        this.$router.push({name: names.GOODS__GOOD_DETAIL, params: {keyword: item.keyword, id: item.id}})
+        this.$router.push({name: names.goods.name, params: {keyword: item.keyword, id: item.id}})
       }
     }
   }

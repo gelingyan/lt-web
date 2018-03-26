@@ -1,9 +1,9 @@
 <template>
   <mt-tabbar v-model="tabSelected" :fixed="true">
     <template v-for="item in items">
-      <mt-tab-item :id="item.name" @click.native="navclick(item)">
+      <mt-tab-item :id="item.name" :key="item.name" @click.native="navclick(item)">
         <i class="iconfont" slot="icon" :class="item.icon"></i>
-        {{item.title}}
+        {{item.name}}
       </mt-tab-item>
     </template>
   </mt-tabbar>

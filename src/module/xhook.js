@@ -24,7 +24,7 @@ xhook.after(function (request, response) {
     if (!data || !data.meta || !data.meta.code) {
       return false
     }
-    if (data.meta.code === 100000) {
+    if (data.meta.code === 100000 || data.meta.code === 100030) {
       messageType = 1
     } else {
       messageType = 2

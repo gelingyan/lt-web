@@ -9,8 +9,8 @@ const menu = [
     title: '用户管理',
     children: [
       {
-        index: names.ADMIN_USER__LIST,
-        text: '用户列表'
+        index: names.user.name,
+        text: names.user.name
       }
       ]
   },
@@ -20,12 +20,12 @@ const menu = [
     title: '商标管理',
     children: [
       {
-        index: names.ADMIN_TRADEMARK__LIST,
-        text: '商标列表'
+        index: names.trademark.name,
+        text: names.trademark.name
       },
       {
-        index: names.ADMIN_TRADEMARK__UPLOAD,
-        text: '上传商标'
+        index: names.trademarkUpload.name,
+        text: names.trademarkUpload.name
       }
       ]
   },
@@ -35,8 +35,12 @@ const menu = [
     title: '文章管理',
     children: [
       {
-        index: names.ADMIN_ARTICLE__LIST,
-        text: '文章列表'
+        index: names.article.name,
+        text: names.article.name
+      },
+      {
+        index: names.articleUpload.name,
+        text: names.articleUpload.name
       }
       ]
   },
@@ -44,7 +48,7 @@ const menu = [
     id: '4',
     icon: 'el-icon-share',
     title: '移动端',
-    index: names.MOBILE__HOME,
+    index: names.home.name,
     children: []
   }
 ]

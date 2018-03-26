@@ -74,7 +74,7 @@
                   message: response.data.message
                 })
                 storage.setAdmin(response.data.data)
-                this.$router.replace({name: names.ADMIN_USER__LIST})
+                this.$router.replace({name: names.user.name})
               } else if (response.data.messageType === 2) {
                 this.$message.error(response.data.message)
                 this.$refs[formName].resetFields()

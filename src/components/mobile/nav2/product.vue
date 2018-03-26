@@ -1,6 +1,6 @@
 <template>
   <ul class="product_content tc cf">
-    <li class="fl" v-for="item in items" @click="goodsClick(item)">
+    <li class="fl" v-for="item in items" :key="item.id" @click="goodsClick(item)">
       <img :src="item.img">
       <span>{{item.title}}</span>
     </li>
@@ -8,6 +8,7 @@
 </template>
 
 <script>
+  import * as names from '../../../router/names'
     export default {
       data () {
         return {
@@ -62,7 +63,7 @@
       },
       methods: {
         goodsClick (item) {
-          this.$router.push({name: 'GOODS__GOODS', params: {keyword: item.id}})
+          this.$router.push({name: names.goodsClass.name, params: {keyword: item.id}})
         }
       }
     }

@@ -8,7 +8,7 @@
       </div>
       <p class="title">商标信息</p>
       <template v-for="item in items">
-        <mt-cell :title="item.title" :value="item.value" class="info"></mt-cell>
+        <mt-cell :title="item.title" :value="item.value" :key="item.value" class="info"></mt-cell>
       </template>
     </div>
     <div class="footer-wrapper"><jk-footer></jk-footer></div>

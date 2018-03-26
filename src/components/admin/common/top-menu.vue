@@ -22,14 +22,14 @@
       return {
         activeIndex: '1',
         user: {
-          name: storage.getAdmin().user,
+          name: storage.getAdmin() ? storage.getAdmin().user : '',
           src: '../../../assets/images/avatar.jpg'
         }
       }
     },
     methods: {
       logout () {
-        this.$router.push({name: names.ADMIN__LOGIN})
+        this.$router.push({name: names.adminLogin.name})
       }
     }
   }

@@ -24,7 +24,7 @@
       </div>
 
       <!-- 商标转让 -->
-      <div class="market-wrapper" v-for="item in items">
+      <div class="market-wrapper" v-for="(item, index) in items" :key="index">
         <mt-cell :title="item.title" class="market-title" @click.native="market(item)">
           <i class="iconfont" slot="icon">&#xe610;</i>
           <i class="iconfont">&#xe603;</i>
@@ -90,7 +90,7 @@
         console.log(item.price)
       },
       market (item) {
-        this.$router.push({name: names.GOODS__GOODS, params: {keyword: item.keyword}})
+        this.$router.push({name: names.goodsClass.name, params: {keyword: item.keyword}})
       }
     },
     filters: {

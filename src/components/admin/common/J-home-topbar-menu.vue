@@ -8,16 +8,16 @@
         <el-menu theme="dark" :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
 
           <template v-for="item in items">
-            <el-submenu :index="item.id" v-if="item.children">
+            <el-submenu :index="item.id" v-if="item.children" :key="item.id">
               <template slot="title">{{item.title}}</template>
               <template v-for="child in item.children">
-                <el-menu-item :index="child.index">
+                <el-menu-item :index="child.index" :key="child.index">
                   {{child.text}}
                 </el-menu-item>
               </template>
             </el-submenu>
             <template v-else="item.children">
-              <el-menu-item :index="item.id">{{item.title}}</el-menu-item>
+              <el-menu-item :index="item.id" :key="item.id">{{item.title}}</el-menu-item>
             </template>
           </template>
 

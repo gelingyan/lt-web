@@ -6,10 +6,10 @@
   $pageSize = $params['pageSize'];
   $start = ($currentPage - 1)*$pageSize;
 
-  $sql=mysql_query("select count(*) from lt_user");
+  $sql=mysql_query("select count(*) from lt_user WHERE isDelete=1");
   $total = mysql_fetch_row($sql);
 
-	$query = mysql_query("SELECT id,date,user,phone,email,note FROM lt_user order by date DESC limit $start, $pageSize") or die('SQL错误！');
+	$query = mysql_query("SELECT id,date,user,phone,email,note,isDelete FROM lt_user WHERE isDelete=1 order by date DESC limit $start, $pageSize") or die('SQL错误！');
 
   $results = array();
   while($row = mysql_fetch_assoc($query)){
@@ -24,6 +24,10 @@
   } else {
     $results["meta"]["code"] = 100030;
     $results["meta"]["message"] = "暂无数据";
+    $results["data"]["list"] = array();
+    $results["data"]["currentPage"] = 0;
+    $results["data"]["pageSize"] = 0;
+    $results["data"]["total"] = 0;
   }
 
   // 将数组转成json格式

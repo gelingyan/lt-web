@@ -110,7 +110,7 @@
           api.userLogin(params).then((response) => {
             if (response.data.messageType === 1) {
               storage.setUser(response.data.data)
-              this.$router.replace({name: names.MOBILE__HOME})
+              this.$router.replace({name: names.home.name})
             } else if (response.data.messageType === 2) {
               Toast(response.data.message)
             }
@@ -122,7 +122,7 @@
         }
       },
       register () {
-        this.$router.push({name: names.MOBILE__REGISTER})
+        this.$router.push({name: names.register.name})
       }
     },
     mounted () {

@@ -1,25 +1,78 @@
 // admin
-export const ADMIN__ADMIN = 'ADMIN__ADMIN'
-export const ADMIN__INDEX = 'ADMIN__INDEX'
-export const ADMIN__LOGIN = 'ADMIN__LOGIN'
-export const ADMIN_USER__LIST = 'ADMIN_USER__LIST' // 用户列表
-export const ADMIN_TRADEMARK__LIST = 'ADMIN_TRADEMARK__LIST' // 商标列表
-export const ADMIN_TRADEMARK__UPLOAD = 'ADMIN_TRADEMARK__UPLOAD' // 商标上传
-export const ADMIN_ARTICLE__LIST = 'ADMIN_ARTICLE__LIST' // 文章编辑
+export const adminIndex = {
+    name: '后台首页',
+    path: '/admin'
+}
+export const adminLogin = {
+    name: '后台登录',
+    path: '/admin/login'
+}
+export const user = {
+    name: '用户列表',
+    path: 'user/list'
+}
+export const trademark = {
+    name: '商标列表',
+    path: 'trademark/list'
+}
+export const trademarkUpload = {
+    name: '商标上传',
+    path: 'trademark/upload'
+}
+export const article = {
+    name: '文章列表',
+    path: 'article/list'
+}
+export const articleUpload = {
+    name: '文章上传',
+    path: 'article/upload'
+}
 
 // 移动端
-export const MOBILE__INDEX = 'MOBILE__INDEX'
-export const MOBILE__HOME = 'MOBILE__HOME' // 首页
-export const MOBILE__CLASS = 'MOBILE__CLASS' // 分类
-export const MOBILE__FIND = 'MOBILE__FIND'// 发现
-export const MOBILE__MESSAGE = 'MOBILE__MESSAGE' // 联系卖家
+export const index = {
+    name: '移动端',
+    path: '/'
+}
 
-export const MOBILE__LOGIN = 'MOBILE__LOGIN' // 登录
-export const MOBILE__REGISTER = 'MOBILE__REGISTER' // 注册
-
-export const MOBILE__ARTICLE = 'MOBILE__ARTICLE' // 文章
+export const login = {
+    name: '登录',
+    path: '/login'
+}
+export const register = {
+    name: '注册',
+    path: '/register'
+}
+export const home = {
+    name: '首页',
+    path: 'home'
+}
+export const classily = {
+    name: '分类查询',
+    path: '/class'
+}
+export const find = {
+    name: '发现',
+    path: '/find'
+}
+export const message = {
+    name: '联系卖家',
+    path: '/message'
+}
+export const document = {
+    name: '文档',
+    path: '/document'
+}
 
 // goods
-export const GOODS__INDEX = 'GOODS__INDEX'
-export const GOODS__GOODS = 'GOODS__GOODS'
-export const GOODS__GOOD_DETAIL = 'GOODS__GOOD_DETAIL'
+export const goodsIndex = {
+    name: '商品主页',
+    path: '/'
+}
+export const goodsClass = {
+    name: '商品类别',
+    path: 'class'
+}
+export const goods = {
+    name: '商品',
+    path: 'goods'
+}

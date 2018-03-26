@@ -18,10 +18,10 @@
       return {
         list: [1, 2, 3, 4, 5, 6],
         items: [
-          {id: 1, name: names.MOBILE__HOME, title: '首页', icon: 'icon-wxbzhuye'},
-          {id: 2, name: names.MOBILE__CLASS, title: '分类查询', icon: 'icon-fenlei1'},
-          {id: 3, name: names.MOBILE__FIND, title: '发现', icon: 'icon-faxian-copy'},
-          {id: 4, name: names.MOBILE__MESSAGE, title: '联系卖家', icon: 'icon-phone'}
+          {id: 1, name: names.home.name, icon: 'icon-wxbzhuye'},
+          {id: 2, name: names.classily.name, icon: 'icon-fenlei1'},
+          {id: 3, name: names.find.name, icon: 'icon-faxian-copy'},
+          {id: 4, name: names.message.name, icon: 'icon-phone'}
         ],
         searchvalue: '',
         viewItems: [],
