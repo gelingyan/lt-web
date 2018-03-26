@@ -8,8 +8,8 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import * as names from '../../../router/names'
-  import storage from '../../../module/storage'
+  import * as names from '@/router/names'
+  import storage from '@/module/storage'
   export default {
     props: {
       items: {

@@ -1,9 +1,16 @@
 <template>
-  <div>
+  <section>
+    <el-breadcrumb separator="/">
+      <el-breadcrumb-item :to="{ path: '/admin' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item>文章管理</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/admin/article/list'}">文章列表</el-breadcrumb-item>
+      <el-breadcrumb-item>文章编辑</el-breadcrumb-item>
+    </el-breadcrumb>
+
     <!-- <editor :uploadImgServer="uploadImgServer" ref="refEditor"></editor> -->
     <input type="file" @change="fileChange" ref='inputFile'>
     <el-button type="primary" @click="submit">上传</el-button>
-  </div>
+  </section>
 </template>
 
 <script>

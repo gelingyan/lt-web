@@ -37,12 +37,8 @@ const menu = [
       {
         index: names.article.name,
         text: names.article.name
-      },
-      {
-        index: names.articleUpload.name,
-        text: names.articleUpload.name
       }
-      ]
+    ]
   },
   {
     id: '4',

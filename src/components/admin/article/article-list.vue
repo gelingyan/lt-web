@@ -57,6 +57,7 @@
 </template>
 <script>
   import api from 'api'
+  import * as names from '@/router/names'
   export default {
     components: {},
     data () {
@@ -74,7 +75,7 @@
         this.multipleSelection = val
       },
       edit (index) {
-        this.$router.push({name: '', query: {id: index.row.id}})
+        this.$router.push({name: names.articleUpload.name, query: {id: index.row.id}})
       },
       del (index, rows) {
         const params = [

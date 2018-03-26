@@ -24,7 +24,7 @@ export const article = {
     path: 'article/list'
 }
 export const articleUpload = {
-    name: '文章上传',
+    name: '文章编辑',
     path: 'article/upload'
 }
 

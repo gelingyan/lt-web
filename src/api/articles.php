@@ -1,7 +1,7 @@
 <?php
 	require 'config.php';
   
-  $query = mysql_query("SELECT * FROM lt_article") or die('SQL错误！');
+  $query = mysql_query("SELECT * FROM lt_article WHERE isDelete=1") or die('SQL错误！');
   $results = array();
   while($row = mysql_fetch_assoc($query)){
     $results["data"]["list"][] = $row;
