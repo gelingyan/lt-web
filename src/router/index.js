@@ -49,10 +49,10 @@ const router = new Router({
           name: names.article.name,
           path: names.article.path,
           component (resolve) {
-            require(['../components/admin/article/article-edit.vue'], resolve)
+            require(['../components/admin/article/article-list.vue'], resolve)
           }
         },
-        { // 文章上传
+        { // 文章编辑
           name: names.articleUpload.name,
           path: names.articleUpload.path,
           component (resolve) {

@@ -34,6 +34,10 @@ export const getAllMarkClass = params => { return instance.post('mark_class.php'
 // 获取商标分类号下的类似群号
 export const getGroup = params => { return instance.post('mark_group.php', params) }
 
+// 获取文章列表
+export const getArticles = params => { return instance.post('articles.php') }
+// 编辑文章
+export const modifyArticle = params => { return instance.post('modifyArticle.php', params) }
 // =================================   mobile   ===============================
 // 登录
 export const userLogin = params => { return instance.post('is_login.php', params) }
@@ -44,4 +48,5 @@ export const userRegister = params => { return instance.post('add.php', params) 
 export const getUserList = params => { return axios.post(`${base}/m/UserList`, params) }
 
 // 获取文档信息
-export const getArticle = params => { return instance.post('article.php', params) }
+export const getArticleById = params => { return instance.post('getArticleById.php', params) }
+
