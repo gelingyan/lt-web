@@ -181,6 +181,7 @@
   .upload-wrapper{
     .el-form{
       padding-top: 20px;
+      width: 800px;
       .tag{font-size: 12px;color: #999;}
       .el-input-number{width: 100%}
     }

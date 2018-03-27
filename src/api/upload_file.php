@@ -7,7 +7,7 @@
   //匹配出图片的格式
   if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64_image_content, $result)){
     $type = $result[2];
-    $new_file = "/ltweb/attached/";
+    $new_file = "/lt/static/img/article/";
 
     if (!file_exists($new_file)){
       //检查是否有该文件夹，如果没有就上传失败

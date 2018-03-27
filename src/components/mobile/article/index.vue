@@ -14,8 +14,9 @@
 </template>
 
 <script>
-  import api from '../../../api'
+  import api from 'api'
   import {Toast, Indicator} from 'mint-ui'
+  import { Relation } from '@/module/const'
   export default {
     components: {
       'jk-top-menu': require('../common/top-menu.vue')
@@ -27,24 +28,14 @@
         text: '标题',
         ps: '副标题',
         content: '暂无内容',
-        keyword: this.$route.params.keyword,
-        items: [
-          {id: 1, title: '商标超市', keyword: 'all'},
-          {id: 2, title: '原创商标', keyword: 'own'},
-          {id: 3, title: '商标注册', keyword: 'registration'},
-          {id: 4, title: '专利申请', keyword: 'application'},
-          {id: 5, title: '商标分类'},
-          {id: 6, title: '商标查询', keyword: 'search'},
-          {id: 7, title: '转让流程', keyword: 'transfer'},
-          {id: 8, title: '公司简介', keyword: 'company'}
-        ]
+        keyword: this.$route.params.keyword
       }
     },
     mounted () {
       let params = {
-        keyword: this.$route.params.keyword
+        keyword: this.keyword
       }
-      api.getArticle(params).then((response) => {
+      api.getArticleByKey(params).then((response) => {
         if (response.data.messageType === 1) {
           this.text = response.data.data.title
           this.ps = response.data.data.ps
@@ -60,11 +51,8 @@
     },
     computed: {
       title () {
-        for (var item of this.items) {
-          if (item.keyword === this.$route.params.keyword) {
-            return item.title
-          }
-        }
+        let ret = Relation.find(item => item.code === this.keyword)
+        return ret.title
       }
     }
   }

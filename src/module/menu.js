@@ -9,7 +9,6 @@ const menu = [
     title: '用户管理',
     children: [
       {
-        index: names.user.name,
         text: names.user.name
       }
       ]
@@ -20,11 +19,9 @@ const menu = [
     title: '商标管理',
     children: [
       {
-        index: names.trademark.name,
         text: names.trademark.name
       },
       {
-        index: names.trademarkUpload.name,
         text: names.trademarkUpload.name
       }
       ]
@@ -32,10 +29,9 @@ const menu = [
   {
     id: '3',
     icon: 'el-icon-document',
-    title: '文章管理',
+    title: '文档管理',
     children: [
       {
-        index: names.article.name,
         text: names.article.name
       }
     ]
@@ -43,8 +39,7 @@ const menu = [
   {
     id: '4',
     icon: 'el-icon-share',
-    title: '移动端',
-    index: names.home.name,
+    title: names.index.name,
     children: []
   }
 ]

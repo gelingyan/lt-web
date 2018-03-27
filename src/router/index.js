@@ -6,7 +6,6 @@ import storage from '../module/storage'
 Vue.use(Router)
 
 const router = new Router({
-//  mode: 'history',
   routes: [
     {
       name: names.adminLogin.name,
@@ -19,7 +18,7 @@ const router = new Router({
     {
       name: names.adminIndex.name,
       path: names.adminIndex.path,
-      redirect: '/admin/user/list',
+      redirect: '/admin/user',
       component (resolve) {
         require(['../components/admin/admin.vue'], resolve)
       },
@@ -45,16 +44,16 @@ const router = new Router({
             require(['../components/admin/trademark/trademark-upload.vue'], resolve)
           }
         },
-        { // 文章列表
+        { // 文档列表
           name: names.article.name,
           path: names.article.path,
           component (resolve) {
             require(['../components/admin/article/article-list.vue'], resolve)
           }
         },
-        { // 文章编辑
-          name: names.articleUpload.name,
-          path: names.articleUpload.path,
+        { // 文档编辑
+          name: names.articleEdit.name,
+          path: `${names.articleEdit.path}/:key`,
           component (resolve) {
             require(['../components/admin/article/article-edit.vue'], resolve)
           }
@@ -65,7 +64,7 @@ const router = new Router({
     {
       name: names.index.name,
       path: names.index.path,
-      redirect: '/home',
+      redirect: names.home.path,
       component (resolve) {
         require(['../components/mobile/index.vue'], resolve)
       },
@@ -142,6 +141,13 @@ const router = new Router({
       path: `${names.document.path}/:keyword`,
       component (resolve) {
         require(['../components/mobile/article/index.vue'], resolve)
+      }
+    },
+    {// 404
+      name: '404',
+      path: '*',
+      component (resolve) {
+        require(['../components/404.vue'], resolve)
       }
     }
   ]

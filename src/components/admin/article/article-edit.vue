@@ -1,72 +1,125 @@
 <template>
-  <section>
+  <section class="article">
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/admin' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>文章管理</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/admin/article/list'}">文章列表</el-breadcrumb-item>
-      <el-breadcrumb-item>文章编辑</el-breadcrumb-item>
+      <el-breadcrumb-item>文档管理</el-breadcrumb-item>
+      <el-breadcrumb-item>编辑</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <!-- <editor :uploadImgServer="uploadImgServer" ref="refEditor"></editor> -->
-    <input type="file" @change="fileChange" ref='inputFile'>
-    <el-button type="primary" @click="submit">上传</el-button>
+    <el-form :model="form" :rules="rules" ref="form" label-width="80px">
+      <el-form-item label="所属" required>
+        <span v-if="form.keyword">{{ form.keyword | getTitle }}</span>
+      </el-form-item>
+      <el-form-item label="标题" prop="title">
+        <el-input v-model="form.title" placeholder='请输入标题'></el-input>
+      </el-form-item>
+      <el-form-item label="副标题">
+        <el-input v-model="form.ps" placeholder='请输入备注'></el-input>
+      </el-form-item>
+      <el-form-item label="内容" prop="content">
+        <editor v-if="form.content" :inputContent="form.content" ref="refEditor"></editor>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="submit('form')" :loading="loading">保 存</el-button>
+        <el-button @click="back">返 回</el-button>
+      </el-form-item>
+    </el-form>
   </section>
 </template>
 
 <script>
   import Editor from '../common/Editor'
   import api from 'api'
+  import { Relation } from '@/module/const'
+  import * as names from '@/router/names'
   export default {
     components: {
       Editor
     },
     data () {
       return {
-        uploadImgServer: 'api/upload_file.php',
-        files: []
+        form: {},
+        rules: {
+          title: [
+            { required: true, message: '请输入标题', trigger: 'blur' }
+          ],
+          content: [
+            { required: true, message: '请输入内容', trigger: 'blur' }
+          ]
+        },
+        loading: false
+      }
+    },
+    mounted () {
+      this.getDate()
+    },
+    filters: {
+      getTitle (code) {
+        let ret = Relation.find(item => item.code === code)
+        return ret.title
       }
     },
     methods: {
-      fileChange () {
-        const files = Array.from(this.$refs.inputFile.files)
-        for (let file of files) {
-          const reader = new FileReader()
-          reader.readAsDataURL(file)
-          reader.onload = (e) => {
-            if (this.files.length > 24) {
-              alert('文件数量不得超过25')
-              return
-            }
-            let item = {data: e.target.result, name: file.name, size: file.size, type: file.type}
-            this.files.push(item)
+      getDate () {
+        this.tableData = []
+        if (this.$route.params.key) {
+          const params = {
+            keyword: this.$route.params.key
           }
+
+          this.tableLoading = true
+          api.getArticleByKey(params).then((response) => {
+            if (response.data.messageType === 1) {
+              this.form = response.data.data
+            } else if (response.data.messageType === 2) {
+              this.$message.error(response.data.message)
+            }
+          }, (rejected) => {
+            this.$message(rejected)
+          }).finally(() => {
+            this.tableLoading = false
+          })
+        } else {
+          this.form = {}
         }
       },
-      submit () {
-      //  console.log(this.$refs.refEditor.editor.txt.html()) // 获取编辑器内容
-        console.log(this.files)
-        const params = this.files
-        api.upload(params).then((response) => {
-          if (response.data.messageType === 1) {
-            this.$message({
-              type: 'success',
-              message: response.data.message
+      submit (formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.loading = true
+            let params = {
+              id: this.form.id,
+              title: this.form.title,
+              content: this.$refs.refEditor.editorContent,
+              ps: this.form.ps
+            }
+            api.modifyArticle(params).then((response) => {
+              if (response.data.messageType === 1) {
+                this.$message({
+                  type: 'success',
+                  message: response.data.message
+                })
+                this.back()
+              } else if (response.data.messageType === 2) {
+                this.$message.error(response.data.message)
+              }
+            }).catch(error => {
+              console.log(error)
+            }).finally(() => {
+              this.loading = false
             })
-            console.lof(response)
-          } else if (response.data.messageType === 2) {
-            this.$message.error(response.data.message)
           }
-        }).catch(error => {
-          console.log(error)
-        }).finally(() => {
         })
+      },
+      back () {
+        this.$router.push({name: names.article.name})
       }
     }
   }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="scss">
   h1, h2 {
     font-weight: normal;
   }
@@ -80,5 +133,11 @@
   }
   a {
     color: #42b983;
+  }
+  .article{
+    .el-form{
+      padding-top: 20px;
+      width: 800px;
+    }
   }
 </style>

@@ -1,52 +1,41 @@
 <template>
-  <div id="editor" v-html="inputContent" @input="outputContent"></div>
+  <div ref="editor" style="text-align: left;"></div>
 </template>
 
 <script>
-  import WangEditor from 'wangeditor'
+  import E from 'wangeditor'
   export default {
-    props: ['inputContent', 'uploadUrl'],
+    name: 'editor',
+    props: ['inputContent'],
     data () {
       return {
-        content: ''
+        editor: null,
+        editorContent: ''
       }
     },
-    computed: {
-    },
     mounted () {
-      this.createEditor()
+      if (!this.editor) {
+        this.createEditor()
+      }
     },
     methods: {
       createEditor () {
-        const self = this
-        const editor = new WangEditor('editor')
-        editor.config.menus = ['source', '|', 'bold', 'underline', 'italic', 'strikethrough', 'eraser', 'forecolor', 'bgcolor', '|', 'quote', 'fontfamily', 'fontsize', 'head', 'unorderlist', 'orderlist', 'alignleft', 'aligncenter', 'alignright',
-          '|', 'link', 'unlink', 'table', 'img', 'video', 'insertcode', '|', 'undo', 'redo', 'fullscreen'
-        ]
-        editor.config.uploadImgUrl = this.uploadUrl
-        editor.onchange = function () {
-          self.formatContent(this.$txt.html())
+        this.editor = new E(this.$refs.editor)
+
+        this.editor.customConfig.uploadImgShowBase64 = true   // 使用 base64 保存图片
+
+        this.editor.customConfig.onchange = (html) => {
+          this.editorContent = html
         }
-        editor.create()
-      },
-      formatContent (content) {
-        // handle
-        // ...
-        this.content = content
-        this.outputContent()
-      },
-      outputContent () {
-        this.$emit('input', this.content)
+        this.editor.create()
+        // 设置内容
+        this.editor.txt.html(this.inputContent)
       }
-    },
-    components: {}
+    }
   }
 </script>
 
 <style scoped lang="scss">
-  #editor{
-    height: 500px;
-  }
   .wangEditor-container{
     border-radius: 2px;
     overflow: hidden;

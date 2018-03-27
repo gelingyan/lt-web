@@ -3,7 +3,7 @@
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/admin' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>商标管理</el-breadcrumb-item>
-      <el-breadcrumb-item>商标列表</el-breadcrumb-item>
+      <el-breadcrumb-item>商标</el-breadcrumb-item>
     </el-breadcrumb>
 
     <!--工具条-->
@@ -13,7 +13,12 @@
           <el-button slot="append" icon="search"></el-button>
         </el-input>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="18">
+        <el-button
+          type="primary"
+          icon="plus"
+          @click="add">新增商标
+        </el-button>
         <el-button
           type="danger"
           icon="delete"
@@ -109,6 +114,7 @@
 </template>
 <script>
   import api from 'api'
+  import * as names from '@/router/names'
   export default {
     components: {},
     data () {
@@ -129,8 +135,11 @@
       handleSelectionChange (val) {
         this.multipleSelection = val
       },
+      add () {
+        this.$router.push({name: names.trademarkUpload.name})
+      },
       edit (index) {
-        this.$router.push({name: '', query: {id: index.row.id}})
+        this.$router.push({name: names.trademarkUpload.name, query: {id: index.row.id}})
       },
       del (index, rows) {
         const params = [

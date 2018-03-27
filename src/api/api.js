@@ -13,8 +13,6 @@ let base = 'api'
 export const getVerCode = () => { return axios.post(`${base}/getVerCode`) }
 
 // =================================   admin   ===============================
-// 测试RAP任务进度
-export const process = params => { return axios.post('index/process', params) }
 // 登录
 export const adminLogin = params => { return instance.post('is_login.php', params) }
 // 用户列表
@@ -35,7 +33,9 @@ export const getAllMarkClass = params => { return instance.post('mark_class.php'
 export const getGroup = params => { return instance.post('mark_group.php', params) }
 
 // 获取文章列表
-export const getArticles = params => { return instance.post('articles.php') }
+export const getArticles = params => { return instance.post('articles.php', params) }
+// 获取文章内容
+export const getArticleByKey = params => { return instance.post('getArticleByKey.php', params) }
 // 编辑文章
 export const modifyArticle = params => { return instance.post('modifyArticle.php', params) }
 // =================================   mobile   ===============================
@@ -46,7 +46,4 @@ export const userRegister = params => { return instance.post('add.php', params) 
 // 普通用户列表
 // 请求参数：accessToken: , pageIndex: 当前页数 , pageCount: 每页条数
 export const getUserList = params => { return axios.post(`${base}/m/UserList`, params) }
-
-// 获取文档信息
-export const getArticleById = params => { return instance.post('getArticleById.php', params) }
 
