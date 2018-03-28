@@ -13,12 +13,12 @@
 
   $results = array();
   while($row = mysql_fetch_assoc($query)){
-    $markID = $row['files'];
-    $sql = mysql_query("SELECT * FROM lt_file WHERE mark_id='{$markID}'") or die('SQL错误！');
+    $markID = $row['mark_id'];
+    $sql = mysql_query("SELECT * FROM lt_file WHERE mark_id='{$markID}' AND isDelete=1") or die('SQL错误！');
     while($files = mysql_fetch_assoc($sql)){
-       $row['imgs'][] = $files;
+       $row['files'][] = $files;
     }
-    if(is_null($row['imgs'])) $row['imgs'] = array(); // 搜索结果为空，则定义为数组
+    if(is_null($row['files'])) $row['files'] = array(); // 搜索结果为空，则定义为数组
     $results["data"]["list"][] = $row;
   }
   if ($results["data"]) { //商标列表

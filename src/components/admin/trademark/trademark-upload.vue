@@ -3,7 +3,7 @@
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/admin' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>商标管理</el-breadcrumb-item>
-      <el-breadcrumb-item>上传商标</el-breadcrumb-item>
+      <el-breadcrumb-item>{{$route.name}}</el-breadcrumb-item>
     </el-breadcrumb>
 
     <el-form ref="form" :model="form" label-width="200px" :rules="rules">
@@ -20,7 +20,7 @@
 
       <el-form-item label="	国际分类" prop="classify">
         <el-row>
-          <el-col :span="16"><el-input-number :min="1" :max="45" v-model="form.classify"></el-input-number></el-col>
+          <el-col :span="16"><el-input-number :min="1" :max="45" v-model="form.classify" @change="classifyChange"></el-input-number></el-col>
           <el-col :span="4" :offset="1"><el-button  icon="search" type="primary" @click="btnClassify">查询</el-button></el-col>
         </el-row>
         <span class="tag">（请输入：1-45之间的阿拉伯数字，例如第9类输入：9）</span>
@@ -38,7 +38,7 @@
 
       <el-form-item label="专用权期限">
         <el-date-picker
-          v-model="form.term"
+          v-model="term"
           type="daterange"
           range-separator=" ~ "
           placeholder="选择日期范围" @change="btnDate">
@@ -54,8 +54,9 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="submitForm('form')">立即上传</el-button>
-        <el-button @click="resetForm('form')">重置</el-button>
+        <el-button type="primary" @click="submitForm('form')">保存</el-button>
+        <el-button @click="resetForm('form')">清空</el-button>
+        <el-button @click="back">返 回</el-button>
       </el-form-item>
     </el-form>
 
@@ -64,6 +65,19 @@
 </template>
 <script>
   import api from 'api'
+  import * as names from '@/router/names'
+  let formInit = {
+      files: [],
+      title: '', // 商标名称 1
+      apply: '', // 申请/注册号 1
+      classify: '', // 国际分类 1
+      type: '', // 商标类型 0
+      timeLimit: '', // 专用权期限 0
+      similarGroup: '', // 类似群 0
+      explicate: '', // 商品/服务 0
+      price: '', // 商标价格 1
+      hot: '' // 人气指数 0
+  }
   export default {
     components: {
       'upload': require('../common/upload.vue'),
@@ -71,19 +85,8 @@
     },
     data () {
       return {
-        form: {
-          files: [],
-          title: '', // 商标名称 1
-          apply: '', // 申请/注册号 1
-          classify: '', // 国际分类 1
-          type: '', // 商标类型 0
-          term: '', // 专用权期限 0
-          timeLimit: '', // 专用权期限 0
-          similarGroup: '', // 类似群 0
-          explicate: '', // 商品/服务 0
-          price: '', // 商标价格 1
-          hot: '' // 人气指数 0
-        },
+        term: [], // 专用权期限
+        form: formInit,
         rules: {
           title: [
             { required: true, message: '请输入商标名称', trigger: 'blur change' }
@@ -120,7 +123,32 @@
         imageUrl: ''
       }
     },
+    mounted () {
+      if (this.$route.params.id) {
+        this.getData()
+      }
+    },
     methods: {
+      getData () {
+        this.loading = true
+        api.getMarkById({id: this.$route.params.id}).then((response) => {
+          if (response.data.messageType === 1) {
+            this.form = response.data.data
+            this.$refs.refUpload.files = response.data.data.files
+            this.term = response.data.data.timeLimit.split(' ~ ')
+          } else if (response.data.messageType === 2) {
+            this.$message.error(response.data.message)
+          }
+        }, (rejected) => {
+          this.$message(rejected)
+        }).finally(() => {
+          this.loading = false
+        })
+      },
+      classifyChange () {
+        this.form.similarGroup = ''
+        this.form.explicate = ''
+      },
       btnClassify () {
         this.$refs.refDlg.toggle({
           type: 'class',
@@ -152,13 +180,14 @@
             let files = this.$refs.refUpload.files
             this.form.files = files
             const params = this.form
-            api.addMark(params).then((response) => {
+            let url = this.$route.name === names.trademarkUpload.name ? 'addMark' : 'modifyMark'
+            api[url](params).then((response) => {
               if (response.data.messageType === 1) {
                 this.$message({
                   type: 'success',
                   message: response.data.message
                 })
-                window.location.reload()
+                this.$router.push({name: names.trademark.name})
               } else if (response.data.messageType === 2) {
                 this.$message.error(response.data.message)
               }
@@ -173,6 +202,18 @@
       },
       resetForm (form) {
         this.$refs[form].resetFields()
+        this.form = formInit
+        this.$refs.refUpload.files = []
+        this.term = []
+      },
+      back () {
+        this.$router.push({name: names.trademark.name})
+      }
+    },
+    watch: {
+      '$route.params.id' () {
+        this.form = formInit
+        this.term = []
       }
     }
   }

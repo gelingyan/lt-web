@@ -74,8 +74,8 @@
       border: 1px solid #c0ccda;
       border-radius: 6px;
       box-sizing: border-box;
-      width: 148px;
-      height: 148px;
+      width: 160px;
+      height: 120px;
       margin: 0 8px 8px 0;
       display: inline-block;
       transition: all .5s cubic-bezier(.55,0,.1,1);
@@ -138,10 +138,10 @@
     border: 1px dashed #c0ccda;
     border-radius: 6px;
     box-sizing: border-box;
-    width: 148px;
-    height: 148px;
+    width: 160px;
+    height: 120px;
     cursor: pointer;
-    line-height: 148px;
+    line-height: 120px;
     vertical-align: top;
     i{
       font-size: 28px;

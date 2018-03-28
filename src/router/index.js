@@ -37,6 +37,13 @@ const router = new Router({
             require(['../components/admin/trademark/trademark-list.vue'], resolve)
           }
         },
+        { // 商标查看
+          name: names.trademarkEdit.name,
+          path: `${names.trademarkEdit.path}/:id`,
+          component (resolve) {
+            require(['../components/admin/trademark/trademark-upload.vue'], resolve)
+          }
+        },
         { // 上传商标
           name: names.trademarkUpload.name,
           path: names.trademarkUpload.path,

@@ -13,11 +13,15 @@ export const user = {
 }
 export const trademark = {
     name: '商标列表',
-    path: 'trademark'
+    path: 'mark'
+}
+export const trademarkEdit = {
+    name: '商标编辑',
+    path: 'markEdit'
 }
 export const trademarkUpload = {
     name: '商标上传',
-    path: 'trademark/upload'
+    path: 'mark/upload'
 }
 export const article = {
     name: '文档列表',

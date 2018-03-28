@@ -12,13 +12,13 @@
   } else {
     $_markID = time();
     for ($x=0; $x<sizeof($params['files']); $x++) {
-       $file = "INSERT INTO lt_file(data,size,name,type,mark_id)
-              VALUES ('{$params['files'][$x]['data']}','{$params['files'][$x]['size']}','{$params['files'][$x]['name']}','{$params['files'][$x]['type']}','{$_markID}')";
+       $file = "INSERT INTO lt_file(data,size,name,type,mark_id,isDelete)
+              VALUES ('{$params['files'][$x]['data']}','{$params['files'][$x]['size']}','{$params['files'][$x]['name']}','{$params['files'][$x]['type']}','{$_markID}',1)";
        mysql_query($file) or die('新增失败！'.mysql_error());
     }
 
-     $query = "INSERT INTO lt_mark(date,files,title,apply,classify,price,similarGroup,explicate,timeLimit,hot)
-              VALUES (now(),'{$_markID}','{$params['title']}','{$params['apply']}','{$params['classify']}','{$params['price']}','{$params['similarGroup']}','{$params['explicate']}','{$params['timeLimit']}','{$params['hot']}')";
+     $query = "INSERT INTO lt_mark(date,mark_id,title,apply,classify,price,similarGroup,explicate,timeLimit,hot,isDelete)
+              VALUES (now(),'{$_markID}','{$params['title']}','{$params['apply']}','{$params['classify']}','{$params['price']}','{$params['similarGroup']}','{$params['explicate']}','{$params['timeLimit']}','{$params['hot']}',1)";
 
      mysql_query($query) or die('新增失败！'.mysql_error());
 

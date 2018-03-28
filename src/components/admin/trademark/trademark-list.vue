@@ -57,7 +57,7 @@
                 <span>{{ props.row.hot }}次</span>
               </el-form-item>
               <el-form-item label="商标:">
-                <span v-for="(item, index) in props.row.imgs" :key="index" class="img-wrapper">
+                <span v-for="(item, index) in props.row.files" :key="index" class="img-wrapper">
                   <img :src="item.data">
                 </span>
               </el-form-item>
@@ -67,8 +67,8 @@
         <el-table-column
           label="商标">
           <template slot-scope="scope">
-            <span class="img-wrapper" v-if="scope.row.imgs[0]">
-              <img :src="scope.row.imgs[0].data">
+            <span class="img-wrapper" v-if="scope.row.files[0]">
+              <img :src="scope.row.files[0].data">
             </span>
             <span v-else>{{ scope.row.title }}</span>
           </template>
@@ -129,7 +129,7 @@
       }
     },
     mounted () {
-      this.getDate()
+      this.getData()
     },
     methods: {
       handleSelectionChange (val) {
@@ -139,7 +139,7 @@
         this.$router.push({name: names.trademarkUpload.name})
       },
       edit (index) {
-        this.$router.push({name: names.trademarkUpload.name, query: {id: index.row.id}})
+        this.$router.push({name: names.trademarkEdit.name, params: {id: index.row.id}})
       },
       del (index, rows) {
         const params = [
@@ -175,7 +175,7 @@
           console.log(error)
         })
       },
-      getDate () {
+      getData () {
         this.tableData = []
         const params = {
           currentPage: this.currentPage,
