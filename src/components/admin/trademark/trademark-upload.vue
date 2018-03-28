@@ -212,6 +212,7 @@
     },
     watch: {
       '$route.params.id' () {
+        this.$refs.form.resetFields()
         this.form = formInit
         this.term = []
       }
