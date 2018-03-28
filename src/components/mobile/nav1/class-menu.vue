@@ -1,6 +1,6 @@
 <template>
   <nav class="class-menu tc cf">
-    <div class="class-item" v-for="item in items" @click="classClick(item)">
+    <div class="class-item" v-for="(item, index) in items" @click="classClick(item)" :key="index">
       <label>{{item.title}}</label>
       <span>{{item.label}}</span>
       <img :src="item.img">
@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import * as names from '@/router/names'
     export default {
       data () {
         return {
@@ -26,7 +27,7 @@
       },
       methods: {
         classClick (item) {
-          this.$router.push({name: 'GOODS__GOODS', params: {keyword: item.keyword}})
+          this.$router.push({name: names.goodsClass.name, params: {keyword: item.keyword}})
         }
       }
     }

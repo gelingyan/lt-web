@@ -8,7 +8,7 @@
 </template>
 
 <script>
-  import * as names from '../../../router/names'
+  import * as names from '@/router/names'
     export default {
       data () {
         return {

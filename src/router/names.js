@@ -35,7 +35,7 @@ export const articleEdit = {
 // 移动端
 export const index = {
     name: '移动端',
-    path: '/'
+    path: '/index'
 }
 
 export const login = {
@@ -79,4 +79,10 @@ export const goodsClass = {
 export const goods = {
     name: '商品',
     path: 'goods'
+}
+
+// 简化版
+export const simple = {
+    name: '简化版首页',
+    path: '/simple'
 }

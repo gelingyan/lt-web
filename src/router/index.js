@@ -123,6 +123,7 @@ const router = new Router({
     {
       name: names.goodsIndex.name,
       path: names.goodsIndex.path,
+      redirect: names.home.path,
       component (resolve) {
         require(['../components/mobile/goods/index.vue'], resolve)
       },
@@ -148,6 +149,13 @@ const router = new Router({
       path: `${names.document.path}/:keyword`,
       component (resolve) {
         require(['../components/mobile/article/index.vue'], resolve)
+      }
+    },
+    {// 简化版首页
+      name: names.simple.name,
+      path: names.simple.path,
+      component (resolve) {
+        require(['../components/simple/index.vue'], resolve)
       }
     },
     {// 404
