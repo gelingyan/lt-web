@@ -84,7 +84,7 @@
       </el-table-column>
     </el-table>
 
-    <dlg-user-list ref="refDlg" @callback="callbackAdd"></dlg-user-list>
+    <dlg-user-list ref="refDlg" @callback="getData"></dlg-user-list>
 
     <div class="page-wrapper fr">
       <el-pagination
@@ -124,10 +124,10 @@
       }
     },
     mounted () {
-      this.getDate()
+      this.getData()
     },
     methods: {
-      getDate () {
+      getData () {
         this.tableData = []
         const params = {
           currentPage: this.currentPage,
@@ -153,8 +153,6 @@
       add () {
         this.$refs.refDlg.toggle({
           type: 'add',
-          dialogFormVisible: true,
-          title: '新增用户',
           disabled: false
         })
         this.$refs.refDlg.form = {
@@ -166,28 +164,9 @@
           note: ''
         }
       },
-      callbackAdd (params) {
-        api.userRegister(params).then((response) => {
-          if (response.data.messageType === 1) {
-            this.$message({
-              type: 'success',
-              message: response.data.message
-            })
-            this.$refs.refDlg.dialogFormVisible = false
-            this.getDate()
-          } else if (response.data.messageType === 2) {
-            this.$message.error(response.data.message)
-          }
-        }).catch(error => {
-          console.log(error)
-        }).finally(() => {
-        })
-      },
       edit (index) {
         this.$refs.refDlg.toggle({
           type: 'edit',
-          dialogFormVisible: true,
-          title: '修改用户',
           disabled: true
         })
         this.$refs.refDlg.form = index.row
@@ -217,7 +196,7 @@
                 type: 'success',
                 message: response.data.message
               })
-              this.getDate()
+              this.getData()
             } else if (response.data.messageType === 2) {
               this.$message.error(response.data.message)
             }
@@ -231,11 +210,11 @@
       },
       handleSizeChange (val) {
         this.pageSize = val
-        this.getDate()
+        this.getData()
       },
       handleCurrentChange (val) {
         this.currentPage = val
-        this.getDate()
+        this.getData()
       }
     },
     computed: {

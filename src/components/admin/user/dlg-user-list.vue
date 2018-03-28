@@ -75,9 +75,9 @@
     },
     methods: {
       toggle (params) {
+        this.dialogFormVisible = true
         this.type = params.type
-        this.dialogFormVisible = params.dialogFormVisible
-        this.title = params.title
+        this.title = params.type === 'add' ? '新增用户' : '修改用户'
         this.disabled = params.disabled
       },
       change (value) {
@@ -98,11 +98,28 @@
               this.edit(params)
             } else if (this.type === 'add') {
               params.password = '123456'
-              this.$emit('callback', params)
+              this.add(params)
             }
           } else {
             return false
           }
+        })
+      },
+      add (params) {
+        api.userRegister(params).then((response) => {
+          if (response.data.messageType === 1) {
+            this.$message({
+              type: 'success',
+              message: response.data.message
+            })
+            this.dialogFormVisible = false
+            this.$emit('callback')
+          } else if (response.data.messageType === 2) {
+            this.$message.error(response.data.message)
+          }
+        }).catch(error => {
+          console.log(error)
+        }).finally(() => {
         })
       },
       edit (params) {

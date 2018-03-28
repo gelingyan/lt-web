@@ -5,7 +5,6 @@
 
   $query = mysql_query("SELECT * FROM lt_mark WHERE id='{$params['id']}' AND isDelete=1") or die('SQL错误！');
 
-  $results = array();
   $row = mysql_fetch_assoc($query);
   $markID = $row['mark_id'];
   $sql = mysql_query("SELECT * FROM lt_file WHERE mark_id='{$markID}' AND isDelete=1") or die('SQL错误！');
@@ -15,6 +14,8 @@
   if (!$row['files']) {
       $row['files'] =  array();
   }
+  
+  $results = array();
   if ($row) { //检索到文章
     $results["data"] = $row;
     $results["meta"]["code"] = 100000;

@@ -5,8 +5,16 @@
 
   foreach($params as $ids){
     $_id = (int)$ids['id'];
-    $exec="UPDATE lt_mark SET isDelete=0 WHERE id = $_id AND isDelete=1";
-    $result=mysql_query($exec);
+    // 查到当前数据的mark_id，在关联表先物理删除图片
+    $query = mysql_query("SELECT * FROM lt_mark WHERE id=$_id AND isDelete=1") or die('SQL错误！');
+    $row = mysql_fetch_assoc($query);
+    $markID = $row['mark_id'];
+    mysql_query("UPDATE lt_file SET isDelete=0 WHERE mark_id = $markID AND isDelete=1");
+
+    // 商标物理删除
+    mysql_query("UPDATE lt_mark SET isDelete=0 WHERE id = $_id AND isDelete=1");
+
+    $results = array();
     if((mysql_affected_rows()==0) or (mysql_affected_rows==-1)){
       $results["meta"]["code"] = 100023;
       $results["meta"]["message"] = "删除失败";

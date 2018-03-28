@@ -67,7 +67,7 @@
               validCode: this.form.validCode,
               userType: '01'
             }
-            api.adminLogin(params).then((response) => {
+            api.login(params).then((response) => {
               if (response.data.messageType === 1) {
                 this.$message({
                   type: 'success',

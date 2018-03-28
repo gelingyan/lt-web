@@ -14,7 +14,7 @@ export const getVerCode = () => { return axios.post(`${base}/getVerCode`) }
 
 // =================================   admin   ===============================
 // 登录
-export const adminLogin = params => { return instance.post('is_login.php', params) }
+export const login = params => { return instance.post('is_login.php', params) }
 // 用户列表
 export const getUsers = params => { return instance.post('users.php', params) }
 // 修改用户
@@ -43,8 +43,7 @@ export const getArticleByKey = params => { return instance.post('getArticleByKey
 // 编辑文章
 export const modifyArticle = params => { return instance.post('modifyArticle.php', params) }
 // =================================   mobile   ===============================
-// 登录
-export const userLogin = params => { return instance.post('is_login.php', params) }
+// 注册
 export const userRegister = params => { return instance.post('add.php', params) }
 
 // 普通用户列表

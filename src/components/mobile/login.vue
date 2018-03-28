@@ -107,7 +107,7 @@
             verifyCode: this.verifyCode.value
           }
 
-          api.userLogin(params).then((response) => {
+          api.login(params).then((response) => {
             if (response.data.messageType === 1) {
               storage.setUser(response.data.data)
               this.$router.replace({name: names.home.name})

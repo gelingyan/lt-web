@@ -163,7 +163,7 @@
                 type: 'success',
                 message: response.data.message
               })
-              this.getDate()
+              this.getData()
             } else if (response.data.messageType === 2) {
               this.$message.error(response.data.message)
             }
@@ -200,11 +200,12 @@
       },
       handleSizeChange (val) {
         this.pageSize = val
-        this.getDate()
+        this.getData()
       },
       handleCurrentChange (val) {
+        console.log(val)
         this.currentPage = val
-        this.getDate()
+        this.getData()
       }
     }
   }

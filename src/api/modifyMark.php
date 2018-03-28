@@ -3,7 +3,7 @@
   $params = file_get_contents('php://input');
   $params = json_decode($params, TRUE);
 
-  // 图片物理删除
+  // 关联表的图片物理删除
   $markID = $params['mark_id'];
   $exec="UPDATE lt_file SET isDelete=0 WHERE mark_id = $markID AND isDelete=1";
   $result=mysql_query($exec);
@@ -15,7 +15,8 @@
   }
 
   $query = mysql_query("UPDATE lt_mark SET date=now(),title='{$params['title']}',apply='{$params['apply']}',classify='{$params['classify']}',price='{$params['price']}',similarGroup='{$params['similarGroup']}',explicate='{$params['explicate']}',timeLimit='{$params['timeLimit']}',hot='{$params['hot']}' WHERE id = '{$params['id']}' AND mark_id='{$markID}'") or die('SQL错误！');
-
+  
+  $results = array();
   if ($query) {
     $results["meta"]["code"] = 100000;
     $results["meta"]["message"] = "操作成功";
