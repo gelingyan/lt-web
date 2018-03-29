@@ -158,6 +158,13 @@ const router = new Router({
         require(['../components/simple/index.vue'], resolve)
       }
     },
+    {// 简化版详情页
+      name: names.simpleDetail.name,
+      path: `${names.simpleDetail.path}/:id`,
+      component (resolve) {
+        require(['../components/simple/detail.vue'], resolve)
+      }
+    },
     {// 404
       name: '404',
       path: '*',

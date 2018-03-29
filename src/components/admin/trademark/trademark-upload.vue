@@ -54,7 +54,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="submitForm('form')">保存</el-button>
+        <el-button type="primary" @click="submitForm('form')" :loading="loading">保存</el-button>
         <el-button @click="resetForm('form')">清空</el-button>
         <el-button @click="back">返 回</el-button>
       </el-form-item>
@@ -118,9 +118,7 @@
             { required: true, message: '请输入商标价格', trigger: 'blur change' }
           ]
         },
-        dialogImageUrl: '',
-        dialogVisible: false,
-        imageUrl: ''
+        loading: false
       }
     },
     mounted () {
@@ -130,7 +128,6 @@
     },
     methods: {
       getData () {
-        this.loading = true
         api.getMarkById({id: this.$route.params.id}).then((response) => {
           if (response.data.messageType === 1) {
             this.form = response.data.data
@@ -142,7 +139,6 @@
         }, (rejected) => {
           this.$message(rejected)
         }).finally(() => {
-          this.loading = false
         })
       },
       classifyChange () {
@@ -159,6 +155,7 @@
         this.$refs.refDlg.toggle({
           type: 'group',
           dialogFormVisible: true,
+          multipleSelection: this.form.similarGroup,
           code: this.form.classify
         })
       },
@@ -177,6 +174,7 @@
       submitForm (form) {
         this.$refs[form].validate((valid) => {
           if (valid) {
+            this.loading = true
             let files = this.$refs.refUpload.files
             this.form.files = files
             const params = this.form
@@ -194,6 +192,7 @@
             }).catch(error => {
               console.log(error)
             }).finally(() => {
+              this.loading = false
             })
           } else {
             return false

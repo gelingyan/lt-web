@@ -25,6 +25,8 @@ export const delUser = params => { return instance.post('delUser.php', params) }
 export const addMark = params => { return instance.post('add_mark.php', params) }
 // 商标列表
 export const getMarks = params => { return instance.post('marks.php', params) }
+// 搜索商标(根据classify、title)
+export const searchMarks = params => { return instance.post('searchMarks.php', params) }
 // 商标详情
 export const getMarkById = params => { return instance.post('getMarkById.php', params) }
 // 商标编辑
@@ -33,6 +35,8 @@ export const modifyMark = params => { return instance.post('modifyMark.php', par
 export const delMark = params => { return instance.post('delMark.php', params) }
 // 获取所有商标分类
 export const getAllMarkClass = params => { return instance.post('mark_class.php', params) }
+// 获取热门商标分类
+export const getHotMarkClass = params => { return instance.post('hotMark_class.php', params) }
 // 获取商标分类号下的类似群号
 export const getGroup = params => { return instance.post('mark_group.php', params) }
 

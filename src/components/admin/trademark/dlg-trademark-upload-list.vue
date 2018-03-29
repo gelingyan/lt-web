@@ -47,10 +47,9 @@
         loading: false,
         group: [],
         child: [],
-        multipleSelection: []
+        multipleSelection: [],
+        select: ''
       }
-    },
-    mounted () {
     },
     computed: {
       groupFun () {
@@ -124,6 +123,7 @@
             if (code < 10) {
                 code = '0' + code
             }
+            this.select = params.multipleSelection
             this.getGroup(code)
             break
         }

@@ -68,7 +68,7 @@
           label="商标">
           <template slot-scope="scope">
             <span class="img-wrapper" v-if="scope.row.files[0]">
-              <img :src="scope.row.files[0].data">
+              <img :src="scope.row.files[0].data"/>
             </span>
             <span v-else>{{ scope.row.title }}</span>
           </template>

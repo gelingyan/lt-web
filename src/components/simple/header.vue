@@ -1,27 +1,71 @@
 <template>
   <div class="header">
       <div class="cf title">
-          商标展示<el-button class="fr" size="small" icon="menu"></el-button>
+          商标展示
+          <el-button class="fr" size="small" @click="menuClick">
+              <i class="iconfont icon-fenlei3"></i>
+          </el-button>
       </div>
-      <div class="content">
-          <ul>
-              <li>25类 鞋服袜手套</li>
-              <li>16类</li>
+      <div class="content" v-if="menu">
+          <ul v-for="item in hotClassify" :key="item.id">
+              <li @click="classifyClick(item)">{{item.code}}类</li>
           </ul>
-          <div class="more">更多类别<i class="el-icon-caret-bottom"></i></div>
-          <ul>
-              <li>20类</li>
-              <li>33类</li>
+          <div :class="['more', active ? 'active' : '']" @click="moreClick">更多类别<i class="el-icon-caret-bottom"></i></div>
+          <ul v-show="active" v-for="item in classify" :key="`class${item.id}`">
+              <li @click="classifyClick(item)">{{item.code}}类</li>
           </ul>
       </div>
   </div>
 </template>
 
 <script>
-  export default {
+import api from 'api'
+export default {
+    props: {
+        classify: {
+            type: Array,
+            default: []
+        }
+    },
+    data () {
+        return {
+            menu: false,
+            active: false,
+            hotClassify: []
+        }
+    },
+    mounted () {
+        this.getHotMarkClass()
+    },
     methods: {
+        menuClick () {
+            this.menu = !this.menu
+            this.active = false
+        },
+        moreClick () {
+            this.active = !this.active
+        },
+        classifyClick (item) {
+            this.$emit('callback', item.id)
+            this.menu = false
+            this.active = false
+        },
+        getHotMarkClass () {
+            this.loading = true
+            api.getHotMarkClass({}).then((response) => {
+                if (response.data.messageType === 1) {
+                this.hotClassify = response.data.data.list
+                } else if (response.data.messageType === 2) {
+                this.$message.error(response.data.message)
+                }
+            }).catch(error => {
+                console.log(error)
+            }).finally(() => {
+                this.loading = false
+            })
+        }
     }
-  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -33,17 +77,25 @@
         font-size: 20px;
         padding: 10px;
         border-bottom: 1px solid #eee;
+        background-color: #f9f9f9;
+        i{
+            font-weight: bold;
+            font-size: 12px;
+        }
     }
     .content{
-        font-size: 16px;
-        line-height: 40px;
+        font-size: 15px;
         ul{
             padding: 0 10px;
+            line-height: 40px;
         }
         .more{
-            padding: 0 10px;
+            padding: 8px 10px;
             border-bottom: 1px solid #eee;
             border-top: 1px solid #eee;
+            &.active{
+                background-color: #eee;
+            }
             i{
                 font-size: 12px;
                 margin-left: 5px;

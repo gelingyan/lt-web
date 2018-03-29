@@ -86,3 +86,7 @@ export const simple = {
     name: '简化版首页',
     path: '/simple'
 }
+export const simpleDetail = {
+    name: '商标详情',
+    path: '/simple'
+}
