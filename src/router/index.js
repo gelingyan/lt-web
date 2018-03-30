@@ -183,15 +183,17 @@ router.beforeEach((to, from, next) => {
   if (to.path === '/admin/login') {
     storage.delAdmin()
   }
-  next()
-  // let admin = storage.getAdmin()
-  // if ((/admin/.test(to.path)) && !admin) {
-  //   console.log(1)
-  //   next({...to})
-  // } else {
-  //   console.log(2)
-  //   next()
-  // }
+
+  let admin = storage.getAdmin()
+  if (/admin/.test(to.path) && (to.path !== '/admin/login')) {
+    if (!admin) {
+      next('/admin/login')
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
 })
 
 export default router

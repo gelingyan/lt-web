@@ -9,6 +9,7 @@
                     <p><span class="title">{{data.title}}</span>{{data.apply}}</p>
                     <p><el-tag type='primary'>第{{data.classify}}类</el-tag> 可售</p>
                     <p class="desc">{{data.explicate.substring(0,20)}}<span v-if="data.explicate.length>20">...</span></p>
+                    <el-button class="btn" type="primary" size="small" plain>查看价格</el-button>
                 </div>
             </el-col>
         </el-row>
@@ -49,6 +50,7 @@ export default {
         .desc{
             line-height: 20px;
         }
+        .btn{margin-top: 10px;}
     }
 }
 </style>

@@ -1,14 +1,32 @@
 <template>
   <div class="simple">
       <sm-header @callback="callback" :classify="classify"></sm-header>
-      <sm-search :classify="classify" ref="search" @search="search"></sm-search>
-      <div v-for="(item, index) in list" :key="index" class="mark-wrapper">
-        <div @click="markDetail(item.id)">
-          <sm-mark :data="item"></sm-mark>
+      <sm-search :classify="classify" ref="search" @search="searchCallback"></sm-search>
+      <div class="content">
+        <mt-loadmore :top-method="loadTop"
+            ref="loadmore">
+          <div ref="refContent" v-for="(item, index) in list" :key="index" class="mark-wrapper">
+            <div @click="markDetail(item.id)">
+              <sm-mark :data="item"></sm-mark>
+            </div>
+          </div>
+        </mt-loadmore>
+        <div class="tc spinner-wrapper" v-if="loading">
+          <mt-spinner class="spinner" type="snake" color="#26a2ff"></mt-spinner>
         </div>
+
+        <p v-if="(total === 0) && !loading" class="noData tc">暂无数据~~</p>
       </div>
-      <p v-if="list.length === 0" class="noData tc">暂无数据~~</p>
-      <!-- todo分页 -->
+
+      <!-- 分页 -->
+      <el-pagination class="page"
+        v-if="total > 0"
+        background
+        layout="prev, pager, next"
+        :total="total" 
+        :page-size="pageSize" 
+        :current-page="currentPage" @current-change="handleCurrentChange">
+      </el-pagination>
   </div>
 </template>
 
@@ -31,22 +49,29 @@ import * as names from '@/router/names'
         currentPage: 1,
         pageSizes: [20, 30, 40, 50],
         pageSize: 20,
-        total: 0
+        total: 0,
+        form: {
+          classify: '',
+          keyword: ''
+        },
+        loading: false
       }
     },
     mounted () {
       this.getAllMarkClass()
     },
     methods: {
-      search (data) {
-        let params = Object.assign({}, data, {
+      getData () {
+        this.loading = true
+        let params = Object.assign({}, this.form, {
           currentPage: this.currentPage,
           pageSize: this.pageSize
         })
-        this.list = []
         api.searchMarks(params).then((response) => {
           if (response.data.messageType === 1) {
             this.list = response.data.data.list
+            this.total = response.data.data.total
+            this.currentPage = response.data.data.currentPage
           } else if (response.data.messageType === 2) {
             this.$message.error(response.data.message)
           }
@@ -58,17 +83,17 @@ import * as names from '@/router/names'
       },
       callback (id) {
         this.$refs.search.value = id
-        let parasm = {
-          classify: id,
-          keyword: this.$refs.search.input
-        }
-        this.search(parasm)
+        this.form.classify = id
+        this.getData()
+      },
+      searchCallback (data) {
+        this.form = data
+        this.getData()
       },
       markDetail (id) {
         this.$router.push({name: names.simpleDetail.name, params: {id}})
       },
       getAllMarkClass () {
-        this.loading = true
         api.getAllMarkClass({}).then((response) => {
           if (response.data.messageType === 1) {
             this.classify = response.data.data.list
@@ -78,8 +103,16 @@ import * as names from '@/router/names'
         }).catch(error => {
           console.log(error)
         }).finally(() => {
-          this.loading = false
         })
+      },
+      handleCurrentChange (val) {
+        this.currentPage = val
+        this.getData()
+      },
+      loadTop () {
+        // 刷新数据
+        this.getData()
+        this.$refs.loadmore.onTopLoaded()
       }
     }
   }
@@ -90,12 +123,41 @@ import * as names from '@/router/names'
   .mark-wrapper{
     padding: 10px 0
   }
-  .noData{
-      font-size: 14px;
-      padding-top: 20px;
+  .content{
+    position: relative;
+    .spinner-wrapper{
+      position: absolute;
+      top: 0;
+      width: 100%;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.5);
+      .spinner{
+        display: inline-block;
+        position: fixed;
+        top: 200px;
+      }
+    }
+    .noData{
+      font-size: 13px;
       color: #666;
+      padding-top: 20px;
       border-top: 1px solid #eee;
       margin-top: 10px;
+    }
+  }
+  .page{
+    padding: 10px 10px 20px 10px;
   }
 }
 </style>
+<style lang="scss">
+  .page{
+    &.el-pagination button, .el-pagination span{
+      height: 30px;
+    }
+    .el-pager li{
+      height: 30px;
+    }
+  }
+</style>
+

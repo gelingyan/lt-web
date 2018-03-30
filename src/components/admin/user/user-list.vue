@@ -140,7 +140,6 @@
             this.tableData = response.data.data.list
             this.total = response.data.data.total
             this.currentPage = response.data.data.currentPage
-            this.pageSize = response.data.data.pageSize
           } else if (response.data.messageType === 2) {
             this.$message.error(response.data.message)
           }

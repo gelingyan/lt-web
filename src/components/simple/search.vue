@@ -2,7 +2,7 @@
     <div class="search">
         <el-row :gutter="10">
             <el-col :span="12">
-                <el-select v-model="value" placeholder="请选择">
+                <el-select v-model="form.classify" placeholder="请选择">
                     <el-option
                         v-for="item in classify"
                         :key="item.id"
@@ -12,7 +12,7 @@
                 </el-select>
             </el-col>
             <el-col :span="12">
-                <el-input v-model="input" placeholder="搜索...">
+                <el-input v-model="form.keyword" placeholder="搜索...">
                     <el-button slot="append" icon="search" @click="search"></el-button>
                 </el-input>
             </el-col>
@@ -30,20 +30,18 @@ export default {
     },
     data () {
         return {
-            value: '25',
-            input: ''
+            form: {
+                classify: '25',
+                keyword: ''
+            }
         }
     },
     mounted () {
-        this.search()
+        this.$emit('search', this.form)
     },
     methods: {
         search () {
-            let params = {
-                classify: this.value,
-                keyword: this.input
-            }
-            this.$emit('search', params)
+            this.$emit('search', this.form)
         }
     }
 }

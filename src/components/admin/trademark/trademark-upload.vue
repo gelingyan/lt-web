@@ -174,25 +174,27 @@
       submitForm (form) {
         this.$refs[form].validate((valid) => {
           if (valid) {
-            this.loading = true
             let files = this.$refs.refUpload.files
-            this.form.files = files
-            const params = this.form
-            let url = this.$route.name === names.trademarkUpload.name ? 'addMark' : 'modifyMark'
-            api[url](params).then((response) => {
-              if (response.data.messageType === 1) {
-                this.$message({
-                  type: 'success',
-                  message: response.data.message
-                })
-                this.$router.push({name: names.trademark.name})
-              } else if (response.data.messageType === 2) {
-                this.$message.error(response.data.message)
-              }
-            }).catch(error => {
-              console.log(error)
-            }).finally(() => {
-              this.loading = false
+            this.checkSize(files, () => {
+              this.loading = true
+              this.form.files = files
+              const params = this.form
+              let url = this.$route.name === names.trademarkUpload.name ? 'addMark' : 'modifyMark'
+              api[url](params).then((response) => {
+                if (response.data.messageType === 1) {
+                  this.$message({
+                    type: 'success',
+                    message: response.data.message
+                  })
+                  this.$router.push({name: names.trademark.name})
+                } else if (response.data.messageType === 2) {
+                  this.$message.error(response.data.message)
+                }
+              }).catch(error => {
+                console.log(error)
+              }).finally(() => {
+                this.loading = false
+              })
             })
           } else {
             return false
@@ -207,12 +209,22 @@
       },
       back () {
         this.$router.push({name: names.trademark.name})
+      },
+      checkSize (files, cb) {
+        for (let item of files) {
+          if (Number(item.size) > 61440) { // 60M*1204
+            this.$message('上传图片不能大于60kb，请重新上传图片')
+            return
+          }
+        }
+        cb()
       }
     },
     watch: {
       '$route.params.id' () {
         this.$refs.form.resetFields()
         this.form = formInit
+        this.$refs.refUpload.files = []
         this.term = []
       }
     }

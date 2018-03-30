@@ -123,8 +123,8 @@
         tableData: [],
         multipleSelection: [],
         currentPage: 1,
-        pageSizes: [20, 30, 40, 50],
-        pageSize: 20,
+        pageSizes: [10, 30, 40, 50],
+        pageSize: 10,
         total: 0
       }
     },
@@ -188,7 +188,6 @@
             this.tableData = response.data.data.list
             this.total = response.data.data.total
             this.currentPage = response.data.data.currentPage
-            this.pageSize = response.data.data.pageSize
           } else if (response.data.messageType === 2) {
             this.$message.error(response.data.message)
           }
@@ -203,7 +202,6 @@
         this.getData()
       },
       handleCurrentChange (val) {
-        console.log(val)
         this.currentPage = val
         this.getData()
       }
