@@ -7,12 +7,12 @@
           </el-button>
       </div>
       <div class="content" v-if="menu">
-          <ul v-for="item in hotClassify" :key="item.id">
-              <li @click="classifyClick(item)">{{item.code}}类</li>
+          <ul>
+              <li v-for="item in hotClassify" :key="item.id" @click="classifyClick(item)">{{item.code}}类<span class="name">{{item.name}}</span></li>
           </ul>
           <div :class="['more', active ? 'active' : '']" @click="moreClick">更多类别<i class="el-icon-caret-bottom"></i></div>
-          <ul v-show="active" v-for="item in classify" :key="`class${item.id}`">
-              <li @click="classifyClick(item)">{{item.code}}类</li>
+          <ul>
+              <li v-show="active" v-for="item in classify" :key="`class${item.id}`" @click="classifyClick(item)">{{item.code}}类<span class="name">{{item.name}}</span></li>
           </ul>
       </div>
   </div>
@@ -71,7 +71,7 @@ export default {
 <style scoped lang="scss">
 .header{
     border: 1px solid #eee;
-    margin: 10px;
+    margin-bottom: 10px;
     color: #666;
     .title{
         font-size: 20px;
@@ -87,7 +87,19 @@ export default {
         font-size: 15px;
         ul{
             padding: 0 10px;
-            line-height: 40px;
+            li {
+                border-bottom: 1px solid #eee;
+                padding-left: 10px;
+                line-height: 40px;
+                .name{
+                    font-size: 14px;
+                    margin-left: 10px;
+                    color: #999;
+                }
+                &:last-child{
+                    border-bottom: none;
+                }
+            }
         }
         .more{
             padding: 8px 10px;

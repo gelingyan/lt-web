@@ -41,15 +41,15 @@
         rules: {
           username: [
               {required: true, message: '请输入帐号', trigger: 'blur'},
-              { min: 4, max: 18, message: '长度在 4 到 18 位', trigger: 'blur change' }
+              { min: 4, max: 18, message: '长度在 4 到 18 位', trigger: 'blur' }
             ],
           password: [
               {required: true, message: '请输入密码', trigger: 'blur'},
-              { min: 6, max: 18, message: '长度在 6 到 18 位', trigger: 'blur change' }
+              { min: 6, max: 18, message: '长度在 6 到 18 位', trigger: 'blur' }
             ],
           validCode: [
               {required: true, message: '请输入验证码', trigger: 'blur'},
-              { min: 4, max: 4, message: '验证码格式不正确', trigger: 'blur change' }
+              { min: 4, max: 4, message: '验证码格式不正确', trigger: 'blur' }
             ]
         }
       }
@@ -69,10 +69,6 @@
             }
             api.login(params).then((response) => {
               if (response.data.messageType === 1) {
-                this.$message({
-                  type: 'success',
-                  message: response.data.message
-                })
                 storage.setAdmin(response.data.data)
                 this.$router.replace({name: names.user.name})
               } else if (response.data.messageType === 2) {

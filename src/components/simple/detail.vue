@@ -1,21 +1,26 @@
 <template>
     <div class="detail" v-loading.fullscreen.lock="fullscreenLoading">
-        <div v-if="data.title">
-            <img :src="data.files[0] ? data.files[0].data : 'static/img/bg.jpg'"/>
-            <p><span class="title">{{data.title}}</span>{{data.apply}}</p>
-            <p><el-tag type='primary'>第{{data.classify}}类</el-tag> 可售</p>
-            <p class="desc">{{data.explicate}}</p>
-            
-            <el-badge value="hot" class="item price">
-                <p>¥<span class="num">{{data.price}}</span></p>
-            </el-badge>
-        </div>
+        <div class="content">
+            <div v-if="data.title">
+                <img :src="data.files[0] ? data.files[0].data : 'static/img/bg.jpg'"/>
+                <p><span class="title">{{data.title}}</span>{{data.apply}}</p>
+                <p><el-tag type='primary'>第{{data.classify}}类</el-tag> 可售</p>
+                <p class="desc">{{data.explicate}}</p>
+                
+                <p class="price">¥<span class="num">{{data.price}}</span></p>
+            </div>
 
-        <el-row :gutter="20">
-            <el-col :span="12"><el-button class="btn" type="success">分 享</el-button></el-col>
-            <el-col :span="12"><el-button class="btn" type="primary">咨 询</el-button></el-col>
-        </el-row>
-        <el-button class="btn" @click="back">返 回</el-button>
+            <el-row :gutter="20">
+                <el-col :span="12"><el-button class="btn" type="success">分 享</el-button></el-col>
+                <el-col :span="12"><el-button class="btn" type="primary">咨 询</el-button></el-col>
+            </el-row>
+            <el-button class="btn" @click="back">返 回</el-button>
+        </div>
+        <div class="address tc">
+            <p class="company">龙腾商标转让</p>
+            <p>电话: <a href="tel:0573-85105515">0573-85105515</a></p>
+            <p>编号: <a href="http://www.miitbeian.gov.cn/">浙ICP备16041652号-1</a></p>
+        </div>
     </div>
 </template>
 
@@ -56,9 +61,11 @@ export default {
 
 <style scoped lang="scss">
 .detail{
-    padding: 10px;
     font-size: 16px;
     color: #666;
+    .content{
+        padding: 10px 10px 20px 10px;
+    }
     img{
         width: 100%;
         border: 1px solid #eee;
@@ -77,7 +84,8 @@ export default {
     }
     .price{
         color: #FF0036;
-        margin-top: 10px;
+        padding-bottom: 0;
+        font-size: 18px;
         .num{
             font-size: 24px;
         }
@@ -85,6 +93,12 @@ export default {
     .btn{
         width: 100%;
         margin-top: 15px;
+    }
+    .address{
+        padding:30px 0 50px 0;
+        color:#c3c6ca;background:#4e525e;
+        .company{color:#d5b273;font-size:14px;padding: 10px;}
+        a{color:#c3c6ca;}
     }
 }
 </style>

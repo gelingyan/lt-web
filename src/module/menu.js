@@ -39,8 +39,15 @@ const menu = [
   {
     id: '4',
     icon: 'el-icon-share',
-    title: names.index.name,
-    children: []
+    title: '移动端',
+    children: [
+      {
+        text: names.index.name
+      },
+      {
+        text: names.simple.name
+      }
+    ]
   }
 ]
 export default menu

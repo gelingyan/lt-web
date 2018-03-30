@@ -83,7 +83,7 @@ export const goods = {
 
 // 简化版
 export const simple = {
-    name: '简化版首页',
+    name: '简化版',
     path: '/simple'
 }
 export const simpleDetail = {

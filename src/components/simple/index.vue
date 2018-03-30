@@ -47,8 +47,7 @@ import * as names from '@/router/names'
         list: [],
         classify: [],
         currentPage: 1,
-        pageSizes: [20, 30, 40, 50],
-        pageSize: 20,
+        pageSize: 10,
         total: 0,
         form: {
           classify: '',
@@ -120,6 +119,9 @@ import * as names from '@/router/names'
 
 <style scoped lang="scss">
 .simple{
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
   .mark-wrapper{
     padding: 10px 0
   }
@@ -132,15 +134,16 @@ import * as names from '@/router/names'
       bottom: 0;
       background: rgba(255, 255, 255, 0.5);
       .spinner{
-        display: inline-block;
         position: fixed;
         top: 200px;
+        left: 50%;
+        margin-left: -18px;
       }
     }
     .noData{
       font-size: 13px;
       color: #666;
-      padding-top: 20px;
+      padding: 20px 0;
       border-top: 1px solid #eee;
       margin-top: 10px;
     }
@@ -151,6 +154,9 @@ import * as names from '@/router/names'
 }
 </style>
 <style lang="scss">
+  body{
+      background: #f9f9f9;
+  }
   .page{
     &.el-pagination button, .el-pagination span{
       height: 30px;
