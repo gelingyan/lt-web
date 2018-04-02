@@ -5,11 +5,12 @@
   $currentPage = $params['currentPage'];
   $pageSize = $params['pageSize'];
   $start = ($currentPage - 1)*$pageSize;
+  $keyword = $params['keyword'];
 
-  $sql=mysql_query("SELECT count(*) FROM lt_mark WHERE isDelete=1 AND classify='{$params['classify']}'");
+  $sql=mysql_query("SELECT count(*) FROM lt_mark WHERE isDelete=1 AND classify='{$params['classify']}' AND title Like '%{$keyword}%'");
   $total = mysql_fetch_row($sql);
 
-  $query = mysql_query("SELECT * FROM lt_mark WHERE isDelete=1 AND classify='{$params['classify']}' order by date DESC limit $start, $pageSize") or die('SQL错误！');
+  $query = mysql_query("SELECT * FROM lt_mark WHERE isDelete=1 AND classify='{$params['classify']}' AND title Like '%{$keyword}%' order by date DESC limit $start, $pageSize") or die('SQL错误！');
 
   $results = array();
   while($row = mysql_fetch_assoc($query)){

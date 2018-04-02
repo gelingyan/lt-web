@@ -90,3 +90,7 @@ export const simpleDetail = {
     name: '商标详情',
     path: '/simple'
 }
+export const simpleArticle = {
+    name: '文档',
+    path: '/article'
+}

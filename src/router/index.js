@@ -165,6 +165,13 @@ const router = new Router({
         require(['../components/simple/detail.vue'], resolve)
       }
     },
+    {// 简化版文章
+      name: names.simpleArticle.name,
+      path: `${names.simpleArticle.path}/:keyword`,
+      component (resolve) {
+        require(['../components/simple/article.vue'], resolve)
+      }
+    },
     {// 404
       name: '404',
       path: '*',

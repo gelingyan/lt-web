@@ -10,9 +10,9 @@
                 <p class="price">¥<span class="num">{{data.price}}</span></p>
             </div>
 
-            <el-row :gutter="20">
+            <el-row :gutter="20" class="btn-wrapper">
                 <el-col :span="12"><el-button class="btn" type="success" @click="share">分 享</el-button></el-col>
-                <el-col :span="12"><el-button class="btn" type="primary"><a href="tel:0573-85105515">咨 询</a></el-button></el-col>
+                <el-col :span="12"><a href="tel:0573-85105515"><el-button class="btn" type="primary">咨 询</el-button></a></el-col>
             </el-row>
             <el-button class="btn" @click="back">返 回</el-button>
         </div>
@@ -25,7 +25,9 @@
             class="mcover"
             v-model="popupVisible"
             position="top">
-            <img class="text" src="static/img/share.gif" @click="popupVisible = false"></img>
+            <div @click="popupVisible = false">
+                <img class="text" src="static/img/share.gif"></img>
+            </div>
         </mt-popup>
     </div>
 </template>
@@ -103,12 +105,21 @@ export default {
             font-size: 24px;
         }
     }
+    .btn-wrapper{
+        a{
+            color: #fff;
+            display: block;
+        }
+    }
     .btn{
         width: 100%;
         margin-top: 15px;
-        a{
-            color: #fff;
-        }
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Chrome/Safari/Opera */
+        -khtml-user-select: none; /* Konqueror */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none;
     }
     .address{
         padding:30px 0 50px 0;
