@@ -149,7 +149,8 @@ import * as names from '@/router/names'
     }
   }
   .page{
-    padding: 10px 10px 20px 10px;
+    padding: 20px 10px 40px 10px;
+    border-top: 1px solid #eee;
   }
 }
 </style>

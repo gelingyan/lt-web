@@ -2,7 +2,7 @@
     <div class="mark">
         <el-row>
             <el-col :span="12">
-                <img :src="data.files[0] ? data.files[0].data : 'static/img/bg.jpg'"/>
+                <img v-lazy="data.files[0] ? data.files[0].data : 'static/img/bg.jpg'"/>
             </el-col>
             <el-col :span="12">
                 <div class="content">
@@ -39,7 +39,8 @@ export default {
     .content{
         font-size: 13px;
         color: #666;
-        padding: 0 10px;
+        padding: 5px 10px;
+        overflow: hidden;
         p{padding-bottom: 5px;}
         .title{
             font-weight: bold;
