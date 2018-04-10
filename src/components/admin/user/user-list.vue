@@ -75,6 +75,7 @@
             @click="edit(scope)">编辑
           </el-button>
           <el-button
+            v-if="scope.row.user !== 'admin'"
             size="small"
             type="danger"
             icon="delete"

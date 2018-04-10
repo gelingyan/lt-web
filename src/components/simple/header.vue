@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import api from 'api'
 export default {
     props: {
         classify: {
@@ -30,12 +29,15 @@ export default {
     data () {
         return {
             menu: false,
-            active: false,
-            hotClassify: []
+            active: false
         }
     },
-    mounted () {
-        this.getHotMarkClass()
+    computed: {
+        hotClassify () {
+            return this.classify.filter(item => item.hot > 0).sort((a, b) => {
+                return a.hot - b.hot
+            })
+        }
     },
     methods: {
         menuClick () {
@@ -49,20 +51,6 @@ export default {
             this.$emit('callback', item.id)
             this.menu = false
             this.active = false
-        },
-        getHotMarkClass () {
-            this.loading = true
-            api.getHotMarkClass({}).then((response) => {
-                if (response.data.messageType === 1) {
-                this.hotClassify = response.data.data.list
-                } else if (response.data.messageType === 2) {
-                this.$message.error(response.data.message)
-                }
-            }).catch(error => {
-                console.log(error)
-            }).finally(() => {
-                this.loading = false
-            })
         }
     }
 }
@@ -91,6 +79,7 @@ export default {
                 border-bottom: 1px solid #eee;
                 padding-left: 10px;
                 line-height: 40px;
+                cursor: pointer;
                 .name{
                     font-size: 14px;
                     margin-left: 10px;
@@ -105,6 +94,7 @@ export default {
             padding: 8px 10px;
             border-bottom: 1px solid #eee;
             border-top: 1px solid #eee;
+            cursor: pointer;
             &.active{
                 background-color: #eee;
             }
