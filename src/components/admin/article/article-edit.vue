@@ -17,7 +17,7 @@
         <el-input v-model="form.ps" placeholder='请输入备注'></el-input>
       </el-form-item>
       <el-form-item label="内容" prop="content">
-        <editor v-if="form.content" :inputContent="form.content" ref="refEditor"></editor>
+        <editor v-if="form.keyword" :inputContent="form.content" ref="refEditor"></editor>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submit('form')" :loading="loading">保 存</el-button>
