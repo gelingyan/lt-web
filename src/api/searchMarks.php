@@ -8,21 +8,20 @@
   $keyword = $params['keyword'];
 
   $sql=mysql_query("SELECT count(*) FROM lt_mark WHERE isDelete=1 AND classify='{$params['classify']}' AND title Like '%{$keyword}%'");
-  $total = mysql_fetch_row($sql);
-
-  $query = mysql_query("SELECT * FROM lt_mark WHERE isDelete=1 AND classify='{$params['classify']}' AND title Like '%{$keyword}%' order by date DESC limit $start, $pageSize") or die('SQL错误！');
-
   $results = array();
-  while($row = mysql_fetch_assoc($query)){
-    $markID = $row['mark_id'];
-    $sql = mysql_query("SELECT * FROM lt_file WHERE mark_id='{$markID}' AND isDelete=1") or die('SQL错误！');
-    while($files = mysql_fetch_assoc($sql)){
-       $row['files'][] = $files;
+
+  if ($sql) {
+    $total = mysql_fetch_row($sql);
+    $query = mysql_query("SELECT * FROM lt_mark WHERE isDelete=1 AND classify='{$params['classify']}' AND title Like '%{$keyword}%' order by date DESC limit $start, $pageSize") or die('SQL错误！');
+    while($row = mysql_fetch_assoc($query)){
+      $markID = $row['mark_id'];
+      $sql = mysql_query("SELECT * FROM lt_file WHERE mark_id='{$markID}' AND isDelete=1") or die('SQL错误！');
+      while($files = mysql_fetch_assoc($sql)){
+        $row['files'][] = $files;
+      }
+      if(is_null($row['files'])) $row['files'] = array(); // 搜索结果为空，则定义为数组
+      $results["data"]["list"][] = $row;
     }
-    if(is_null($row['files'])) $row['files'] = array(); // 搜索结果为空，则定义为数组
-    $results["data"]["list"][] = $row;
-  }
-  if ($results["data"]) { //商标列表
     $results["data"]["currentPage"] = $currentPage;
     $results["data"]["pageSize"] = $pageSize;
     $results["data"]["total"] = (int)$total[0];

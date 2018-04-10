@@ -7,15 +7,15 @@
   $start = ($currentPage - 1)*$pageSize;
 
   $sql=mysql_query("select count(*) from lt_user WHERE isDelete=1");
-  $total = mysql_fetch_row($sql);
-
-	$query = mysql_query("SELECT id,date,user,phone,email,note,isDelete FROM lt_user WHERE isDelete=1 order by date DESC limit $start, $pageSize") or die('SQL错误！');
-
   $results = array();
-  while($row = mysql_fetch_assoc($query)){
-    $results["data"]["list"][] = $row;
-  }
-  if ($results["data"]) { //用户列表
+  
+  if ($sql) {
+    $total = mysql_fetch_row($sql);
+
+    $query = mysql_query("SELECT id,date,user,phone,email,note,isDelete FROM lt_user WHERE isDelete=1 order by date DESC limit $start, $pageSize") or die('SQL错误！');
+    while($row = mysql_fetch_assoc($query)){
+      $results["data"]["list"][] = $row;
+    }
     $results["data"]["currentPage"] = $currentPage;
     $results["data"]["pageSize"] = $pageSize;
     $results["data"]["total"] = (int)$total[0];

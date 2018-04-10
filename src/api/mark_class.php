@@ -13,6 +13,7 @@
   } else {
     $results["meta"]["code"] = 100030;
     $results["meta"]["message"] = "暂无数据";
+    $results["data"]["list"] = array();
   }
 
   // 将数组转成json格式

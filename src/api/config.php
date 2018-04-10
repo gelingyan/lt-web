@@ -1,10 +1,10 @@
 <?php
 	header('Content-Type:application/json; charset=UTF-8');
 
-	define('DB_HOST','bdm253137229.my3w.com');
-	define('DB_USER','bdm253137229');
-	define('DB_PWD','gly123456');
-	define('DB_NAME','bdm253137229_db');
+	define('DB_HOST','rm-bp1976e938fq4ae2pjo.mysql.rds.aliyuncs.com');
+	define('DB_USER','root');
+	define('DB_PWD','Luxiao987');
+	define('DB_NAME','lt');
 
 
 	$conn = @mysql_connect(DB_HOST, DB_USER, DB_PWD) or die('数据库连接失败：'.mysql_error());
