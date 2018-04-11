@@ -23,6 +23,10 @@ export const trademarkUpload = {
     name: '商标上传',
     path: 'mark/upload'
 }
+export const trademarkUploadList = {
+    name: '批量上传',
+    path: 'mark/upload-list'
+}
 export const article = {
     name: '文档列表',
     path: 'article'
@@ -64,17 +68,17 @@ export const message = {
 }
 export const document = {
     name: '文档详情',
-    path: '/document'
+    path: '/doc'
 }
 
 // goods
 export const goodsIndex = {
     name: '商品主页',
-    path: '/'
+    path: '/class'
 }
 export const goodsClass = {
     name: '商品类别',
-    path: 'class'
+    path: '/class'
 }
 export const goods = {
     name: '商品',
@@ -84,11 +88,11 @@ export const goods = {
 // 简化版
 export const simple = {
     name: '简化版',
-    path: '/simple'
+    path: '/'
 }
 export const simpleDetail = {
     name: '商标详情',
-    path: '/simple'
+    path: '/sim'
 }
 export const simpleArticle = {
     name: '文档',

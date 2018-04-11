@@ -14,6 +14,9 @@ export const errorCode = code => {
     case 100021:
       result = '商标上传失败'
       break
+    case 100022:
+      result = '商标批量上传失败'
+      break
     case 100023:
       result = '商标删除失败'
       break

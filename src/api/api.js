@@ -23,6 +23,8 @@ export const modifyUser = params => { return instance.post('modifyUser.php', par
 export const delUser = params => { return instance.post('delUser.php', params) }
 // 上传商标
 export const addMark = params => { return instance.post('add_mark.php', params) }
+// 批量上传商标
+export const addMarkList = params => { return instance.post('add_mark_list.php', params) }
 // 商标列表
 export const getMarks = params => { return instance.post('marks.php', params) }
 // 搜索商标(根据classify、title)
