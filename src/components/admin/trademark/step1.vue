@@ -23,11 +23,11 @@
                 <el-input :disabled="scope.row.disabled" size="small" v-model="scope.row.apply" placeholder="请输入内容"></el-input>
             </template>
         </el-table-column>
-        <el-table-column label="操作" width="150">
+        <el-table-column label="操作" width="300">
             <template slot-scope="scope">
                 <el-button :disabled="scope.row.disabled" size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-                <el-button v-if="!tableData[scope.$index+1]" size="small" type="primary" @click="handleAdd">新增</el-button>
                 <el-button v-if="scope.row.disabled" size="small" type="primary" @click="handleCancel(scope.$index, scope.row)">撤销</el-button>
+                <el-button v-if="!tableData[scope.$index+1]" size="small" type="primary" @click="handleAdd">新增</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -117,7 +117,8 @@
           return {
             files: [],
             title: '',
-            apply: ''
+            apply: '',
+            disabled: false
           }
         })
       }
