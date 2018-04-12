@@ -6,7 +6,7 @@
       <el-breadcrumb-item>{{$route.name}}</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <step-one v-show="step === 1" @callbackStep1="callbackStep1"></step-one>
+    <step-one v-show="step === 1" @callbackStep1="callbackStep1" ref="step1"></step-one>
     <step-two v-show="step === 2" @callbackStep2="callbackStep2" @callbackStep2Back="step = 1"></step-two>
 
     <div v-show="step === 3" class="step3">
@@ -29,7 +29,7 @@
       </el-table>
 
       <div class="tc">
-        <el-button type="primary" @click="step = 1">重新上传</el-button>
+        <el-button type="primary" @click="reset">重新上传</el-button>
         <el-button @click="back">返回列表</el-button>
       </div>
       
@@ -56,6 +56,10 @@
       }
     },
     methods: {
+      reset () {
+        this.step = 1
+        this.$refs.step1.clear()
+      },
       back () {
         this.$router.push({name: names.trademark.name})
       },
@@ -65,6 +69,10 @@
       },
       callbackStep2 (data) {
         this.step = 3
+        if (this.data.length === 0) {
+          this.$message('无数据不能上传')
+          return
+        }
         this.loading = true
         let params = this.data.map(item => {
           return {

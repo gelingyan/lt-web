@@ -70,7 +70,7 @@
             api.login(params).then((response) => {
               if (response.data.messageType === 1) {
                 storage.setAdmin(response.data.data)
-                this.$router.replace({name: names.user.name})
+                this.$router.replace({name: names.trademark.name})
               } else if (response.data.messageType === 2) {
                 this.$message.error(response.data.message)
                 this.$refs[formName].resetFields()
