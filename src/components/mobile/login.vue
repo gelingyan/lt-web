@@ -26,7 +26,6 @@
 
 <script>
   import * as names from '../../router/names'
-  import { runAsync } from '../../assets/js/common'
   import {Toast, Indicator} from 'mint-ui'
   import api from '../../api'
   import storage from '../../module/storage'
@@ -70,6 +69,7 @@
           state: '',
           codeID: '',
           imgUrl: '',
+          imgCode: '',
           isShow: true,
           placeholder: '请输入验证码',
           onValidate: () => {
@@ -83,15 +83,16 @@
             }
             return true
           },
-          updateVerifyImg: () => { this.getVerifyCode() }
+          updateVerifyImg: () => { this.getValidCode() }
         }
       }
     },
     props: {},
     methods: {
-      getVerifyCode () {
-        runAsync().then(data => {
-          this.verifyCode.imgUrl = data
+      getValidCode () {
+        api.getVerCode().then(res => {
+          this.verifyCode.imgUrl = res.data.data.verCodeImage
+          this.verifyCode.imgCode = res.data.data.code = res.data.data.code
         })
       },
       login () {
@@ -126,7 +127,7 @@
       }
     },
     mounted () {
-      this.getVerifyCode()
+      this.getValidCode()
     }
   }
 </script>

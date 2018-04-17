@@ -18,14 +18,13 @@
           <el-col :span="10" :offset="2"><img :src="imgPath" @click="getValidCode"></el-col>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm('form')">提交</el-button>
+          <el-button type="primary" @click="submitForm('form')" :loading="loading">提交</el-button>
         </el-form-item>
       </el-form>
     </el-col>
   </el-row>
 </template>
 <script>
-  import { runAsync } from '../../assets/js/common'
   import api from '../../api'
   import * as names from '../../router/names'
   import storage from '../../module/storage'
@@ -38,10 +37,11 @@
           validCode: ''
         },
         imgPath: '',
+        imgCode: '',
         rules: {
           username: [
               {required: true, message: '请输入帐号', trigger: 'blur'},
-              { min: 4, max: 18, message: '长度在 4 到 18 位', trigger: 'blur' }
+              { min: 1, max: 18, message: '长度在 4 到 18 位', trigger: 'blur' }
             ],
           password: [
               {required: true, message: '请输入密码', trigger: 'blur'},
@@ -51,7 +51,8 @@
               {required: true, message: '请输入验证码', trigger: 'blur'},
               { min: 4, max: 4, message: '验证码格式不正确', trigger: 'blur' }
             ]
-        }
+        },
+        loading: false
       }
     },
     mounted () {
@@ -61,6 +62,12 @@
       submitForm (formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            if (Number(this.imgCode) !== Number(this.form.validCode)) {
+              this.getValidCode()
+              this.$message.error('验证码错误')
+              return
+            }
+            this.loading = true
             const params = {
               user: this.form.username,
               password: this.form.password,
@@ -72,10 +79,12 @@
                 storage.setAdmin(response.data.data)
                 this.$router.replace({name: names.trademark.name})
               } else if (response.data.messageType === 2) {
+                this.getValidCode()
                 this.$message.error(response.data.message)
-                this.$refs[formName].resetFields()
+                // this.$refs[formName].resetFields()
               }
             }).finally(() => {
+              this.loading = false
             })
           } else {
             return false
@@ -83,8 +92,9 @@
         })
       },
       getValidCode () {
-        runAsync().then(data => {
-          this.imgPath = data
+        api.getVerCode().then(res => {
+          this.imgCode = res.data.data.code
+          this.imgPath = res.data.data.verCodeImage
         })
       }
     }

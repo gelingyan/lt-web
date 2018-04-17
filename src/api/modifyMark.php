@@ -5,7 +5,7 @@
 
   // 关联表的图片物理删除
   $markID = $params['mark_id'];
-  $exec="UPDATE lt_file SET isDelete=0 WHERE mark_id = $markID AND isDelete=1";
+  $exec="UPDATE lt_file SET isDelete=0 WHERE mark_id='{$markID}' AND isDelete=1";
   $result=mysql_query($exec);
   // 重新新增关联图片
   for ($x=0; $x<sizeof($params['files']); $x++) {

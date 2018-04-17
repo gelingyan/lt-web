@@ -1,32 +1,34 @@
 <?php
-  $params = file_get_contents('php://input');
-  $params = json_decode($params, TRUE);
+//1、判断是不是有效文件
+if(!is_uploaded_file($_FILES['upfile']['tmp_name'])){  
+    echo "请上传一个有效文件";  
+    exit(0);  
+}     
+//2、判断文件格式  
+$file=$_FILES['upfile'];
+$isoktype=array("image/jpeg","image/pjpeg","image/gif");  
+if(!in_array($file['type'],$isoktype)){  
+    echo "请上传一个格式正确的文件";  
+    exit(0);      
+}     
+//3、判断图片大小  
+$isoksize=102400;  
+if($isoksize<$file["size"]){  
+    echo "文件过大";  
+    exit(0);          
+}  
+  
+////图片重命名  
+$exe=substr($file['name'],stripos($file['name'], '.')+1);  
+$newname=time();  
+$newname.=rand()*1000;  
+//echo $newname.$exe;  
+  
+//执行保存操作  
+$savadir='../upload/';  
+move_uploaded_file($file['tmp_name'],$savadir.$newname);//第一个参数是待上传文件的地址，第二个是上传后文件的地址  
+$c=$savadir.$newname;  
+echo "上传成功"; 
 
-  $results = array();
-  $base64_image_content =  $params[0]['data'];
-  //匹配出图片的格式
-  if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64_image_content, $result)){
-    $type = $result[2];
-    $new_file = "/lt/static/img/";
-
-    if (!file_exists($new_file)){
-      //检查是否有该文件夹，如果没有就上传失败
-      $results["meta"]["code"] = 100001;
-      $results["meta"]["message"] = "没有文件夹";
-    } else {
-      $new_file = $new_file.time().".{$type}";
-
-      if (file_put_contents($new_file, base64_decode(str_replace($result[1], '', $base64_image_content)))){
-        $results["errno"] =  0;
-        $results["data"] =  $new_file;
-        $results["meta"]["code"] = 100000;
-        $results["meta"]["message"] = "操作成功";
-      }else{
-        $results["errno"] =  1;
-      }
-    }
-  }
-
-  // 将数组转成json格式
-  echo json_encode($results);
 ?>
+

@@ -10,7 +10,7 @@ var instance = axios.create({
 
 let base = 'api'
 
-export const getVerCode = () => { return axios.post(`${base}/getVerCode`) }
+export const getVerCode = () => { return instance.post('getVerCode') }
 
 // =================================   admin   ===============================
 // 登录

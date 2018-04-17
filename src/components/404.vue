@@ -6,7 +6,7 @@
     </p>
   </div>
 </template>
-<<script>
+<script>
 export default {
     methods: {
         back () {

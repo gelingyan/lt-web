@@ -70,6 +70,13 @@ const admin = [
         component (resolve) {
           require(['../components/admin/article/article-edit.vue'], resolve)
         }
+      },
+      { // 文档编辑
+        name: '测试',
+        path: '/image',
+        component (resolve) {
+          require(['../components/admin/image.vue'], resolve)
+        }
       }
     ]
   }

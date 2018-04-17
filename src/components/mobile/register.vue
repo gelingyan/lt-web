@@ -29,7 +29,6 @@
   import * as names from '../../router/names'
   import {Toast, Indicator} from 'mint-ui'
   import api from '../../api'
-  import { runAsync } from '../../assets/js/common'
   import storage from '../../module/storage'
   export default {
     components: {
@@ -106,14 +105,16 @@
             return true
           },
           imgUrl: '',
-          updateVerifyImg: () => { this.getVerifyCode() }
+          imgCode: '',
+          updateVerifyImg: () => { this.getValidCode() }
         }
       }
     },
     methods: {
-      getVerifyCode () {
-        runAsync().then(data => {
-          this.code.imgUrl = data
+      getValidCode () {
+        api.getVerCode().then(res => {
+           this.code.imgUrl = res.data.data.verCodeImage
+           this.code.imgCode = res.data.data.code
         })
       },
       login () {
@@ -154,7 +155,7 @@
       }
     },
     mounted () {
-      this.getVerifyCode()
+      this.getValidCode()
     }
   }
 </script>

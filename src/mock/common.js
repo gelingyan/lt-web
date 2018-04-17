@@ -7,13 +7,15 @@ const Random = Mock.Random
 
 // 验证码
 Mock.mock(new RegExp(baseUrl + 'getVerCode'), 'post', options => {
+  let number = Mock.mock('@increment(1000)')
   return Mock.mock({
     meta: {
-      code: Mock.mock('@integer(100, 500)'),
-      message: '我是模拟的信息'
+      code: 100000,
+      message: '操作成功'
     },
     data: {
-      verCodeImage: Random.image('200x100', '#4A7BF7', Mock.mock('@increment(1000)'))
+      verCodeImage: Random.image('200x100', '#4A7BF7', number),
+      code: number
     }
   })
 })
