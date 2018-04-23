@@ -26,6 +26,9 @@ const menu = [
       },
       {
         text: names.trademarkUploadList.name
+      },
+      {
+        text: names.batchUpload.name
       }
       ]
   },

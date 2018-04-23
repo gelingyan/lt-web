@@ -1,34 +1,50 @@
 <?php
-//1、判断是不是有效文件
-if(!is_uploaded_file($_FILES['upfile']['tmp_name'])){  
-    echo "请上传一个有效文件";  
-    exit(0);  
-}     
-//2、判断文件格式  
-$file=$_FILES['upfile'];
-$isoktype=array("image/jpeg","image/pjpeg","image/gif");  
-if(!in_array($file['type'],$isoktype)){  
-    echo "请上传一个格式正确的文件";  
-    exit(0);      
-}     
-//3、判断图片大小  
-$isoksize=102400;  
-if($isoksize<$file["size"]){  
-    echo "文件过大";  
-    exit(0);          
-}  
-  
-////图片重命名  
-$exe=substr($file['name'],stripos($file['name'], '.')+1);  
-$newname=time();  
-$newname.=rand()*1000;  
-//echo $newname.$exe;  
-  
-//执行保存操作  
-$savadir='../upload/';  
-move_uploaded_file($file['tmp_name'],$savadir.$newname);//第一个参数是待上传文件的地址，第二个是上传后文件的地址  
-$c=$savadir.$newname;  
-echo "上传成功"; 
+    header('Content-Type:application/json; charset=UTF-8');
 
+    //根据年月日分计算并创建目录
+    function mk_dir(){
+        $dir = date('Y/m', time());
+        if(is_dir('../upfiles/' .$dir)){
+            return $dir;
+        }else{
+            mkdir('../upfiles/'.$dir,0777,true);
+            return $dir;
+        }
+    }
+    //获取文件后缀
+    function getExt($file) {
+        $tmp = explode('.',$file);
+        return end($tmp);
+    }
+    //随机生成移动后的文件名
+    function fileName($file) {
+        $str = 'abcdefghijkmnpqrstwxyz23456789';
+        return date("Y").date("m").date("d").date("H").date("i").date("s").substr(str_shuffle($str),0,6);
+    }
+
+    $results = array();
+    //判断错误代码，=0则上传成功，!=0则上传失败
+    if ($_FILES['upfile']['error'] !=0){
+        $results["meta"]["code"] = 100024;
+        $results["meta"]["message"] = "上传文件失败";
+    } else {
+        //处理上传过程
+        $upfile = $_FILES['upfile'];
+
+        //拼接文件路径
+        $target_name = '../upfiles/' .mk_dir().'/'.fileName($upfile['name']). '.' .getExt($upfile['name']);
+
+        //移动
+        if(move_uploaded_file($upfile['tmp_name'],$target_name)) {
+            $results["data"]=$upfile;
+            $results["data"]["data"]=$target_name.ltrim($str, ".");
+            $results["meta"]["code"] = 100000;
+            $results["meta"]["message"] = "操作成功";
+        } else{
+            $results["meta"]["code"] = 100024;
+            $results["meta"]["message"] = "创建文件夹或保存文件失败";
+        }
+    }
+ 
+    echo json_encode($results);
 ?>
-

@@ -37,6 +37,7 @@ import SmSearch from './search.vue'
 import SmMark from './mark.vue'
 import * as names from '@/router/names'
   export default {
+    name: 'list',
     components: {
       SmHeader,
       SmSearch,

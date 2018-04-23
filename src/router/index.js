@@ -71,11 +71,11 @@ const admin = [
           require(['../components/admin/article/article-edit.vue'], resolve)
         }
       },
-      { // 文档编辑
-        name: '测试',
-        path: '/image',
+      { // 批量上传新版
+        name: names.batchUpload.name,
+        path: names.batchUpload.path,
         component (resolve) {
-          require(['../components/admin/image.vue'], resolve)
+          require(['../components/admin/trademark/batch-upload.vue'], resolve)
         }
       }
     ]

@@ -81,10 +81,9 @@
               } else if (response.data.messageType === 2) {
                 this.getValidCode()
                 this.$message.error(response.data.message)
-                // this.$refs[formName].resetFields()
+                this.loading = false
               }
             }).finally(() => {
-              this.loading = false
             })
           } else {
             return false
