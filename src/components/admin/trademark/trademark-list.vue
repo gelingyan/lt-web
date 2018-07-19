@@ -41,9 +41,6 @@
         <el-table-column type="expand">
           <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand">
-              <!--<el-form-item label="商标类型:">-->
-                <!--<span>{{ props.row.type }}</span>-->
-              <!--</el-form-item>-->
               <el-form-item label="专用期限:">
                 <span>{{ props.row.timeLimit }}</span>
               </el-form-item>

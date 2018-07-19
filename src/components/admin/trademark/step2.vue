@@ -52,23 +52,22 @@
   </div>
 </template>
 <script>
-  let formInit = {
-      classify: '', // 国际分类 1
-      type: '', // 商标类型 0
-      timeLimit: '', // 专用权期限 0
-      similarGroup: '', // 类似群 0
-      explicate: '', // 商品/服务 0
-      price: '', // 商标价格 1
-      hot: '' // 人气指数 0
-  }
   export default {
     components: {
-      'dlg-trademark-attribute': require('./dlg-trademark-upload-list.vue')
+      'dlg-trademark-attribute': require('./dlg-trademark-attribute.vue')
     },
     data () {
       return {
         term: [], // 专用权期限
-        form: formInit,
+        form: {
+          classify: 25, // 国际分类
+          type: '', // 商标类型 0
+          timeLimit: '', // 专用权期限 0
+          similarGroup: '2501,2502,2503,2504,2505,2507', // 类似群
+          explicate: '衣物,婴儿纺织用品,特种运动服装,不透水服装,戏装,鞋', // 商品/服务 0
+          price: '18888', // 商标价格
+          hot: '' // 人气指数 0
+        },
         rules: {
           classify: [
             {
@@ -138,7 +137,15 @@
       },
       resetForm (form) {
         this.$refs[form].resetFields()
-        this.form = formInit
+        this.form = {
+          classify: '',
+          type: '',
+          timeLimit: '',
+          similarGroup: '',
+          explicate: '',
+          price: '',
+          hot: ''
+        }
         this.term = []
       },
       back () {

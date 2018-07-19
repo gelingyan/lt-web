@@ -8,7 +8,11 @@
 
     <el-form ref="form" :model="form" label-width="200px" :rules="rules">
       <el-form-item>
-        <upload ref='refUpload'></upload>
+        <upload
+          ref='refUpload'
+          actionUrl="/api/upload_file.php"
+          format="image/png, image/jpeg, image/gif, image/jpg">
+        </upload>
       </el-form-item>
 
       <el-form-item label="商标名称" prop="title">
@@ -81,7 +85,7 @@
   export default {
     components: {
       'upload': require('../common/upload.vue'),
-      'dlg-trademark-attribute': require('./dlg-trademark-upload-list.vue')
+      'dlg-trademark-attribute': require('./dlg-trademark-attribute.vue')
     },
     data () {
       return {

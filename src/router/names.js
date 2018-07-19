@@ -23,13 +23,9 @@ export const trademarkUpload = {
     name: '商标上传',
     path: 'mark/upload'
 }
-export const trademarkUploadList = {
-    name: '批量上传',
-    path: 'mark/upload-list'
-}
 export const batchUpload = {
     name: '批量上传(新)',
-    path: 'mark/batch-upload'
+    path: 'mark/batch-list'
 }
 export const article = {
     name: '文档列表',

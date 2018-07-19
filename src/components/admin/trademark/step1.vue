@@ -8,9 +8,16 @@
 
     <el-table :data="tableData" border style="width: 100%" highlight-current-row class="trademark-list">
         <el-table-column type="index" width="60"> </el-table-column>
-        <el-table-column label="商标图片" width="300">
+        <el-table-column label="商标图片" width="350">
             <template slot-scope="scope">
-              <input :disabled="scope.row.disabled" type="file" accept="image/png, image/jpeg, image/gif, image/jpg" :ref="`inputFile${scope.row.id}`" @change="fileChange(scope.$index, scope.row)"/>
+              <upload-file
+                :ref="`inputFile${scope.row.id}`"
+                tip="只能上传jpg/png文件，且不超过50kb"
+                format="image/png, image/jpeg, image/gif, image/jpg"
+                :index="scope.$index"
+                :disabled="scope.row.disabled"
+                actionUrl="/api/upload_file.php"
+                @callbackFile="callbackFile"></upload-file>
             </template>
         </el-table-column>
         <el-table-column label="商标名称">
@@ -39,6 +46,9 @@
 </template>
 <script>
   export default {
+    components: {
+      'upload-file': require('../common/upload-file.vue')
+    },
     data () {
       return {
         tableData: [
@@ -53,25 +63,14 @@
       }
     },
     methods: {
-      fileChange (index, row) {
-        let files = this.$refs[`inputFile${row.id}`].files
-        for (let file of files) {
-          const reader = new FileReader()
-          reader.readAsDataURL(file)
-          reader.onload = (e) => {
-            if (this.tableData[index]['files'].length > 24) {
-                alert('文件数量不得超过25')
-                return
-            }
-            if (Number(file.size) > 61440) { // 60M*1204
-                this.$message('上传图片不能大于60kb，请重新上传图片')
-                this.$refs[`inputFile${row.id}`].value = ''
-                return
-            }
-            let item = {data: e.target.result, name: file.name, size: file.size, type: file.type}
-            this.tableData[index]['files'].push(item)
-          }
+      callbackFile (data) {
+        let item = {
+          data: data.file.data.slice(2),
+          name: data.file.name,
+          size: data.file.size,
+          type: data.file.type
         }
+        this.tableData[data.index]['files'].push(item)
       },
       handleDelete (index, row) { // 删除
         let checkData = this.tableData.filter(item => !item.disabled)
@@ -113,7 +112,8 @@
       },
       clear () {
         this.tableData = this.tableData.map((item, index) => {
-          this.$refs[`inputFile${item.id}`].value = ''
+          this.$refs[`inputFile${item.id}`].fileUrl = ''
+          this.$refs[`inputFile${item.id}`].$refs.upload.clearFiles()
           return {
             files: [],
             title: '',

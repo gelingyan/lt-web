@@ -50,13 +50,13 @@ const admin = [
           require(['../components/admin/trademark/trademark-upload.vue'], resolve)
         }
       },
-      { // 批量上传25类商标
-        name: names.trademarkUploadList.name,
-        path: names.trademarkUploadList.path,
-        component (resolve) {
-          require(['../components/admin/trademark/trademark-upload-list.vue'], resolve)
-        }
-      },
+      // {
+      //   name: names.trademarkUploadList.name,
+      //   path: names.trademarkUploadList.path,
+      //   component (resolve) {
+      //     require(['../components/admin/trademark/trademark-upload-list.vue'], resolve)
+      //   }
+      // },
       { // 文档列表
         name: names.article.name,
         path: names.article.path,
@@ -71,11 +71,11 @@ const admin = [
           require(['../components/admin/article/article-edit.vue'], resolve)
         }
       },
-      { // 批量上传新版
+      { // 默认批量上传25类商标新版
         name: names.batchUpload.name,
         path: names.batchUpload.path,
         component (resolve) {
-          require(['../components/admin/trademark/batch-upload.vue'], resolve)
+          require(['../components/admin/trademark/upload-list.vue'], resolve)
         }
       }
     ]

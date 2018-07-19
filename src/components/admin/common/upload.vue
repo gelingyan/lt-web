@@ -8,56 +8,78 @@
         </label>
         <span class="actions">
           <span @click="picturePreview(item)"><i class="el-icon-view"></i></span>
-          <span @click="del(item)"><i class="el-icon-delete2"></i></span>
+          <span @click="del(index)"><i class="el-icon-delete2"></i></span>
         </span>
       </li>
     </ul>
-    <div @click='btnUpload' ref='btnFile' class="upload-btn tc">
+
+    <el-upload
+      class="upload-btn tc"
+      name="upfile"
+      :action="actionUrl"
+      :show-file-list="false"
+      :on-success="handleSuccess"
+      :before-upload="beforeUpload">
       <i class="el-icon-plus"></i>
-      <input type="file" style="display:none" accept="image/png, image/jpeg, image/gif, image/jpg" multiple="multiple" @change="fileChange" ref='inputFile'/>
-    </div>
-    <el-dialog title="" v-model="dialogVisible" size="tiny">
+    </el-upload>
+    <el-dialog title="" :visible.sync="dialogVisible" size="tiny">
       <div class="dialog-inner">
-        <img :src="picturePreviewSrc">
+        <img :src="dialogImageUrl">
       </div>
     </el-dialog>
   </div>
 </template>
 <script>
   export default {
-    components: {},
-    props: {},
+    props: {
+      actionUrl: {
+          required: true,
+          type: String
+      },
+      format: {
+          type: String,
+          default: ''
+      }
+    },
     data () {
       return {
         dialogVisible: false,
-        picturePreviewSrc: '',
+        dialogImageUrl: '',
         files: []
       }
     },
     methods: {
-      del (item) {
-        this.files.splice(this.files.indexOf(item), 1)
+      del (index) {
+        this.files.splice(index, 1)
       },
       picturePreview (item) {
-        this.picturePreviewSrc = item.data
+        this.dialogImageUrl = item.data
         this.dialogVisible = true
       },
-      btnUpload () {
-        this.$refs.inputFile.click()
+      beforeUpload (file) {
+        const isJPG = this.format.indexOf(file.type) > -1
+        const isLt2M = file.size / 1024 < 60
+
+        if (!isJPG) {
+            this.$message.error(`上传文件只能是${this.format}格式!`)
+        }
+        if (!isLt2M) {
+            this.$message.error('上传文件大小不能超过 50kb!')
+        }
+        this.loading = true
+        return isJPG && isLt2M
       },
-      fileChange () {
-        const files = Array.from(this.$refs.inputFile.files)
-        for (let file of files) {
-          const reader = new FileReader()
-          reader.readAsDataURL(file)
-          reader.onload = (e) => {
-            if (this.files.length > 24) {
-              alert('文件数量不得超过25')
-              return
-            }
-            let item = {data: e.target.result, name: file.name, size: file.size, type: file.type}
-            this.files.push(item)
+      handleSuccess (res, file) {
+        if (res.data) {
+          let item = {
+            data: res.data.data.slice(2),
+            name: res.data.name,
+            size: res.data.size,
+            type: res.data.type
           }
+          this.files.push(item)
+        } else {
+          this.$message.error(res.message)
         }
       }
     }
@@ -75,7 +97,7 @@
       border-radius: 6px;
       box-sizing: border-box;
       width: 160px;
-      height: 120px;
+      height: 160px;
       margin: 0 8px 8px 0;
       display: inline-block;
       transition: all .5s cubic-bezier(.55,0,.1,1);
@@ -139,9 +161,9 @@
     border-radius: 6px;
     box-sizing: border-box;
     width: 160px;
-    height: 120px;
+    height: 160px;
     cursor: pointer;
-    line-height: 120px;
+    line-height: 160px;
     vertical-align: top;
     i{
       font-size: 28px;

@@ -114,17 +114,20 @@
       },
       toggle (params) {
         this.type = params.type
+        console.log(params)
         switch (params.type) {
           case 'class':
             this.getAllMarkClass()
             break
-          default:
+          case 'group':
             let code = params.code
             if (code < 10) {
                 code = '0' + code
             }
             this.select = params.multipleSelection
             this.getGroup(code)
+            break
+          default:
             break
         }
         this.dialogFormVisible = params.dialogFormVisible

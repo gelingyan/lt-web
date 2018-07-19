@@ -1,6 +1,6 @@
 <?php
     header('Content-Type:application/json; charset=UTF-8');
-
+    header("Access-Control-Allow-Origin: http://www.ltsbzr.com");
     //根据年月日分计算并创建目录
     function mk_dir(){
         $dir = date('Y/m', time());
@@ -37,7 +37,7 @@
         //移动
         if(move_uploaded_file($upfile['tmp_name'],$target_name)) {
             $results["data"]=$upfile;
-            $results["data"]["data"]=$target_name.ltrim($str, ".");
+            $results["data"]["data"]=$target_name;
             $results["meta"]["code"] = 100000;
             $results["meta"]["message"] = "操作成功";
         } else{
